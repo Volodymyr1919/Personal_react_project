@@ -45,7 +45,8 @@ MongoClient.connect(data.url)
                     type_business: req.body.type_business,
                     name: req.body.username,
                     password: req.body.password,
-                    who: req.body.who
+                    who: req.body.who,
+                    bonus: req.body.bonus
                 })
             }
         })

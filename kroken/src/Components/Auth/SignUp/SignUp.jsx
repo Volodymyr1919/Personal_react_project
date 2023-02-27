@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Modal, Button } from "react-bootstrap";
+import { typeList } from "../../TypeList";
 import "bootstrap/dist/css/bootstrap.css";
 // eslint-disable-next-line no-unused-vars
 import signUp from "./signUp.scss"
@@ -9,9 +10,9 @@ export default function SignUp() {
 
 
     const [username, setUsername]               = useState("");
-    const [business_type, setBusiness_type]     = useState("");
+    const [business_type, setBusiness_type]     = useState("restaurant");
     const [business_name, setBusiness_name]     = useState("");
-    const [who, setWho]                         = useState("");
+    const [who, setWho]                         = useState("visitor");
     const [password, setPassword]               = useState("");
     const [show, setShow]                       = useState(false);
     const [resText, setResText]                 = useState("");
@@ -24,7 +25,6 @@ export default function SignUp() {
         mode: "onChange",
       });
       const onSubmit = (data) => {
-        console.log("User credentials", data);
         const requestOptions = {
           method: "POST",
           headers: {
@@ -35,7 +35,8 @@ export default function SignUp() {
             password        : data.password,
             business_name   : data.business_name,
             type_business   : data.business_type,
-            who             : data.who
+            who             : data.who,
+            bonus           : 2
           }),
         };
         fetch("http://localhost:3001/signup", requestOptions)
@@ -119,22 +120,15 @@ export default function SignUp() {
                             </div>
                             <div className="login__field">
                                 <i className="login__icon fas fa-user"></i>
-                                <input
-                                    type="text"
-                                    className="login__input"
-                                    placeholder="Business type"
-                                    {...register("business_type", {
-                                        required: 'Field is required',
-                                        minLength: {
-                                            value: 4,
-                                            message: "Minimum 4 symbols"
-                                        },
-                                        value: business_type,
-                                        onChange: (e) => {
-                                            businessType(e);
-                                        }
-                                    })}
-                                />
+                                <select {...register("business_type", {
+                                  required: 'Field is required',
+                                  value: business_type,
+                                  onChange: (e) => {
+                                    businessType(e);
+                                  }
+                                })}>
+                                  {typeList.map(item => <option key={item.value} value={item.value}>{item.name}</option>)}
+                                </select>
                                 {errors.business_type && (<p className="errorMessage">{errors.business_type.message}</p>)}
                             </div>
                             <div className="login__field">
@@ -158,24 +152,16 @@ export default function SignUp() {
                                 {errors.business_name && (<p className="errorMessage">{errors.business_name.message}</p>)}
                             </div>
                             <div className="login__field">
-                                <i className="login__icon fas fa-user"></i>
-                                <input
-                                    type="text"
-                                    className="login__input"
-                                    placeholder="Visitor or owner"
-                                    {...register("who", {
-                                        required: 'Field is required',
-                                        minLength: {
-                                            value: 4,
-                                            message: "Minimum 4 symbols"
-                                        },
-                                        value: who,
-                                        onChange: (e) => {
-                                            _who(e);
-                                        }
-                                    })}
-                                />
-                                {errors.who && (<p className="errorMessage">{errors.who.message}</p>)}
+                                <select {...register("who", {
+                                  required: 'Field is required',
+                                  value: who,
+                                  onChange: (e) => {
+                                    _who(e)
+                                  }
+                                })}>
+                                  <option value="visitor">Visitor</option>
+                                  <option value="owner">Owner</option>
+                                </select>
                             </div>
                             <div className="login__field">
                                 <i className="login__icon fas fa-lock"></i>

@@ -20,7 +20,6 @@ export default function SignIn() {
         mode: "onChange",
       });
       const onSubmit = (data) => {
-        console.log("User credentials", data);
         const requestOptions = {
           method: "POST",
           headers: {
