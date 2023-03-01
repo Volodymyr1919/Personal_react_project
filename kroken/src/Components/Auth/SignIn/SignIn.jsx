@@ -94,7 +94,7 @@ export default function SignIn() {
                                         }
                                     })}
                                 />
-                                {errors.username && (<p className="errorMessage">{errors.username.message}</p>)}
+                                <p className="errorMessage">{errors.username && errors.username.message}</p>
                             </div>
                             <div className="login__field">
                                 <i className="login__icon fas fa-lock"></i>
@@ -114,7 +114,7 @@ export default function SignIn() {
                                         }
                                     })}
                                 />
-                                {errors.password && (<p className="errorMessage">{errors.password.message}</p>)}
+                                <p className="errorMessage">{errors.password && errors.password.message}</p>
                             </div>
                             <button type="submit" className="button login__submit">
                                 <span className="button__text">Log In Now</span>
@@ -131,8 +131,6 @@ export default function SignIn() {
                 </div>
             </div>
         </form>
-
       </div>
-        
     );
 }

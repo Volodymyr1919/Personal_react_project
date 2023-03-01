@@ -84,7 +84,7 @@ body {
 	border-radius: 60px;
 }
 
-.login {
+.loginSignUp {
 	width: 320px;
 	padding: 30px;
 	padding-top: 0px;
@@ -178,8 +178,8 @@ body {
 }
 
 .errorMessage {
+	height: 15px;
 	font-size: 12px;
 	color: red;
-    margin: 0;
-    padding: 0;
+	display: block;
 }

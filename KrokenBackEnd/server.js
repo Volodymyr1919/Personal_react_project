@@ -48,6 +48,7 @@ MongoClient.connect(data.url)
                     who: req.body.who,
                     bonus: req.body.bonus
                 })
+                res.sendStatus(200);
             }
         })
     });
