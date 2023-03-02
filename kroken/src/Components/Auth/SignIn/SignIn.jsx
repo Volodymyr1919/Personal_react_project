@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 // eslint-disable-next-line no-unused-vars
 import signIn from "./signIn.scss";
 
 export default function SignIn() {
+
+    const navigate = useNavigate();
 
     const [username, setUsername]   = useState("");
     const [password, setPassword]   = useState("");
@@ -41,7 +44,20 @@ export default function SignIn() {
             }
           })
           .then((resp) => {
-            console.log(resp);
+            localStorage.setItem('myAppId', resp._id);
+            switch (resp.who) {
+
+              case "visitor":
+                navigate("user");
+                break;
+                
+              case "owner":
+                navigate("owner");
+                break;
+
+              default:
+                break;
+            }
           })
       };
 

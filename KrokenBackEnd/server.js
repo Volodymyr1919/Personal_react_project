@@ -3,7 +3,8 @@ const   express     = require('express'),
         app         = express(),
         cors        = require('cors'),
         MongoClient = require('mongodb').MongoClient,
-        data        = require('./config');
+        data        = require('./config'),
+        ObjectId    = require('mongodb').ObjectId;
 
 MongoClient.connect(data.url)
 .then(client => {
@@ -14,7 +15,8 @@ MongoClient.connect(data.url)
     app.use(bodyParser.json());
 
     const   db                  = client.db('rest-users'),
-            usersCollection     = db.collection('users');
+            usersCollection     = db.collection('users'),
+            postsCollection     = db.collection('rest_posts');
 
     app.post('/login', (req, res) => {
         // console.log(req.body);
@@ -52,6 +54,33 @@ MongoClient.connect(data.url)
             }
         })
     });
+
+    app.get('/me/:id', (req, res) => {      
+        let id = new ObjectId(req.params.id);
+        usersCollection.findOne({
+            _id: id
+        })
+        .then(result => {
+            if (result) {
+                res.send(result);
+            } else {
+                res.sendStatus(404)
+            }
+        })
+    });
+
+    app.get('/posts/:business_name', (req, res) => {
+        postsCollection.find({
+            business_name : req.params.business_name
+        }).toArray()
+        .then(result => {
+            if (result) {
+                res.send(result);
+            } else {
+                res.sendStatus(404);
+            }
+        })
+    })
 
     app.listen(data.port, function() {
         console.log(`Listening on port ${data.port}`);

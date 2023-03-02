@@ -17,6 +17,8 @@ function App() {
         <Route path="/user" element={<Visitor />} />
         <Route path="/signup/owner" element={<Navigate to="/owner" />} />
         <Route path="/signup/user" element={<Navigate to="/user" />} />
+        <Route path="/login/user" element={<Navigate to="/user" />} />
+        <Route path="/login/owner" element={<Navigate to="/owner" />} />
       </Routes>
     </>
   );
