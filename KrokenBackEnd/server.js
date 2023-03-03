@@ -70,7 +70,8 @@ MongoClient.connect(data.url)
 
     app.get('/posts/:business_name', (req, res) => {
         postsCollection.find({
-            business_name : req.params.business_name
+            business_name : req.params.business_name,
+            deleted : false
         }).toArray()
         .then(result => {
             if (result) {
@@ -79,7 +80,63 @@ MongoClient.connect(data.url)
                 res.sendStatus(404);
             }
         })
-    })
+    });
+
+    app.get('/users', (req, res) => {
+        usersCollection.find({
+            who : "visitor"
+        }).toArray()
+        .then(result => {
+            if (result) {
+                res.send(result);
+            } else {
+                res.sendStatus(404);
+            }
+        })
+    });
+
+    app.post('/offer', (req, res) => {
+        postsCollection.findOne({
+            condition: req.body.condition,
+            required_bonuses: req.body.required_bonuses,
+            gift: req.body.gift
+        })
+        .then(result => {
+            if (result) {
+                res.sendStatus(403);
+            } else {
+                postsCollection.insertOne({
+                    business_name: req.body.business_name,
+                    condition: req.body.condition,
+                    required_bonuses: req.body.required_bonuses,
+                    gift: req.body.gift,
+                    deleted : false
+                }).then(() => {
+                    res.sendStatus(200);
+                })
+            }
+        })
+    });
+
+    app.delete('/posts', (req, res) => {      
+        let id = new ObjectId(req.body.id);
+        postsCollection.updateOne(
+            {
+                _id: id,
+                deleted : false
+            },
+            {
+                deleted : true
+            }
+        )
+        .then(result => {
+            if (result) {
+                res.send(result);
+            } else {
+                res.sendStatus(404)
+            }
+        })
+    });
 
     app.listen(data.port, function() {
         console.log(`Listening on port ${data.port}`);
