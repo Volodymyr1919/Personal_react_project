@@ -5,6 +5,7 @@ import visitor from "./visitor.scss";
 export default function Visitor() {
 
     const [myData, setMyData] = useState("");
+    const [posts, setPosts] = useState("");
 
     useEffect(() => {
         async function getMyData() {
@@ -35,16 +36,21 @@ export default function Visitor() {
             return res.json();
         })
         .then((res) => {
-            console.log(res);
+            setPosts(res);
         })
     }
 
     return(
         <div>
-            Name: {myData.name}<br />
+            Username: {myData.name}<br />
             {myData.type_business}: {myData.business_name}<br />
             Bonus: {myData.bonus}
             <button onClick={getPosts}>Get all posts</button>
+            <div>
+                {posts === "" ? "To see all posts - press the button" : posts.map(post => <p key={post._id}>
+                    Condition: {post.condition}, Required bonuses: {myData.bonus}/{post.required_bonuses}, Gift: {post.gift}
+                </p>)}
+            </div>
         </div>
     );
 }

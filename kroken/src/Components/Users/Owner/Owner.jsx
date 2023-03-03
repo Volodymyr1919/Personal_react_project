@@ -11,6 +11,7 @@ export default function Owner() {
     const [requiredBonuses, setRequiredBonuses] = useState("");
     const [gift, setGift] = useState("");
     const [posts, setPosts] = useState("");
+    const [oldPosts, setOldPosts] = useState("");
 
     useEffect(() => {
         async function getMyData() {
@@ -84,11 +85,46 @@ export default function Owner() {
         })
     }
 
+    const getOldPosts = () => {
+        fetch('http://localhost:3001/oldPosts/' + (myData.business_name).replace(/ /g,"_"), {
+            method: 'GET',
+            headers: {
+                "Content-Type" : "application/json"
+            }
+        })
+        .then((res) => {
+            return res.json();
+        })
+        .then((res) => {
+            setOldPosts(res);
+        })
+    }
+
     const deletePost = (e) => {
         if (window.confirm("Do you want to delete this offer?") === true) {
             console.log(e.target.id);
             fetch('http://localhost:3001/posts', {
                 method: 'DELETE',
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify({
+                    id: e.target.id,
+                })
+            })
+            .then((res) => {
+                console.log(res);
+            })
+        } else {
+            return;
+        }
+    }
+
+    const returnPost = (e) => {
+        if (window.confirm("Do you want to return this offer?") === true) {
+            console.log(e.target.id);
+            fetch('http://localhost:3001/returnPosts', {
+                method: 'POST',
                 headers: {
                     "Content-Type" : "application/json"
                 },
@@ -162,6 +198,7 @@ export default function Owner() {
             </form>
             <button onClick={getAllUsers}>Get all my visitors</button>
             <button onClick={getPosts}>Get all posts</button>
+            <button onClick={getOldPosts}>Get history of previous posts</button>
             <div>
                 {myVisitors === "" ? "To see your visitors - press the button" : myVisitors.map(vis => <p key={vis._id}>
                     Name: {vis.name}, bonuses: {vis.bonus}
@@ -171,6 +208,12 @@ export default function Owner() {
                 {posts === "" ? "To see your posts - press the button" : posts.map(post => <p key={post._id}>
                     Condition: {post.condition}, Required bonuses: {post.required_bonuses}, Gift: {post.gift}
                     <button onClick={deletePost} id={post._id}>DELETE</button>
+                </p>)}
+            </div>
+            <div>
+                {oldPosts === "" ? "To see your old posts - press the button" : oldPosts.map(post => <p key={post._id}>
+                    Condition: {post.condition}, Required bonuses: {post.required_bonuses}, Gift: {post.gift}
+                    <button onClick={returnPost} id={post._id}>RETURN</button>
                 </p>)}
             </div>
         </div>

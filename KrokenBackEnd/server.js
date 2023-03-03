@@ -99,7 +99,8 @@ MongoClient.connect(data.url)
         postsCollection.findOne({
             condition: req.body.condition,
             required_bonuses: req.body.required_bonuses,
-            gift: req.body.gift
+            gift: req.body.gift,
+            deleted : false
         })
         .then(result => {
             if (result) {
@@ -123,17 +124,29 @@ MongoClient.connect(data.url)
         postsCollection.updateOne(
             {
                 _id: id,
-                deleted : false
+                deleted: false
             },
-            {
-                deleted : true
-            }
+            {$set: {deleted: true}}
         )
         .then(result => {
             if (result) {
                 res.send(result);
             } else {
                 res.sendStatus(404)
+            }
+        })
+    });
+
+    app.get('/oldPosts/:business_name', (req, res) => {
+        postsCollection.find({
+            business_name : req.params.business_name,
+            deleted : true
+        }).toArray()
+        .then(result => {
+            if (result) {
+                res.send(result);
+            } else {
+                res.sendStatus(404);
             }
         })
     });
