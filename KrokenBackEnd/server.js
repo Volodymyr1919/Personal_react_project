@@ -19,7 +19,6 @@ MongoClient.connect(data.url)
             postsCollection     = db.collection('rest_posts');
 
     app.post('/login', (req, res) => {
-        // console.log(req.body);
         usersCollection.findOne({
             name: req.body.username, 
             password: req.body.password
@@ -34,7 +33,6 @@ MongoClient.connect(data.url)
     });
 
     app.post('/signup', (req, res) => {
-        // console.log(req.body);
         usersCollection.findOne({
             name: req.body.username, 
         })
@@ -49,8 +47,9 @@ MongoClient.connect(data.url)
                     password: req.body.password,
                     who: req.body.who,
                     bonus: req.body.bonus
+                }).then(resp => {
+                    res.send(resp.insertedId);
                 })
-                res.sendStatus(200);
             }
         })
     });

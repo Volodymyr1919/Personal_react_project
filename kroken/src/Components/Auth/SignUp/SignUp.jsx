@@ -45,8 +45,7 @@ export default function SignUp() {
           .then((resp) => {
               switch (resp.status) {
                 case 200:
-                  who === 'visitor' ? navigate("user") : navigate("owner")
-                  break;
+                  return resp.json();
                 case 403:
                   setShow(true);
                   setResText("Username should be unique");
@@ -54,6 +53,13 @@ export default function SignUp() {
                 default:
                   break;
               }
+          }).then((resp) => {
+            localStorage.setItem('myAppId', resp);
+            if(resp) {
+              who === 'visitor' ? navigate("user") : navigate("owner")
+            } else {
+              return;
+            }
           })
       };
 
