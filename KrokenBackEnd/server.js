@@ -4,7 +4,8 @@ const   express     = require('express'),
         cors        = require('cors'),
         MongoClient = require('mongodb').MongoClient,
         data        = require('./config'),
-        ObjectId    = require('mongodb').ObjectId;
+        ObjectId    = require('mongodb').ObjectId,
+        rateLimit   = require("express-rate-limit");
 
 MongoClient.connect(data.url)
 .then(client => {
@@ -147,6 +148,67 @@ MongoClient.connect(data.url)
                 res.send(result);
             } else {
                 res.sendStatus(404);
+            }
+        })
+    });
+
+    app.post('/returnPost', (req, res) => {
+        let id = new ObjectId(req.body.id);
+        postsCollection.updateOne(
+            {
+                _id: id,
+                deleted: true
+            },
+            {$set: {deleted: false}}
+        )
+        .then(result => {
+            if (result) {
+                res.send(result);
+            } else {
+                res.sendStatus(404)
+            }
+        })
+    });
+
+    app.post('/spendbonus', (req, res) => {
+        let id = new ObjectId(req.body.id);
+        usersCollection.updateOne(
+            {
+                _id: id,
+                bonus: {$gt: 0}
+            },
+            {$inc: {bonus: -req.body.bonus}}
+        )
+        .then(result => {
+            if (result) {
+                res.send(result);
+            } else {
+                res.sendStatus(404)
+            }
+        })
+    });
+
+    app.use(
+        rateLimit({
+          windowMs: 24 * 60 * 60 * 1000,
+          max: 1,
+          headers: true
+        })
+    );
+
+    app.post('/getbonus', (req, res) => {
+        let id = new ObjectId(req.body.id);
+        usersCollection.updateOne(
+            {
+                _id: id
+            },
+            {$inc: {bonus: 1}}
+        )
+        .then(result => {
+            if (result) {
+                res.send(result);
+            } else {
+                res.sendStatus(404)
             }
         })
     });

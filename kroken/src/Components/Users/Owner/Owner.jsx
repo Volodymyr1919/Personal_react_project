@@ -122,8 +122,7 @@ export default function Owner() {
 
     const returnPost = (e) => {
         if (window.confirm("Do you want to return this offer?") === true) {
-            console.log(e.target.id);
-            fetch('http://localhost:3001/returnPosts', {
+            fetch('http://localhost:3001/returnPost', {
                 method: 'POST',
                 headers: {
                     "Content-Type" : "application/json"
