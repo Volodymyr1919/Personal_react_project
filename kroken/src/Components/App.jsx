@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import SignUp from "./Auth/SignUp/SignUp";
 import SignIn from "./Auth/SignIn/SignIn";
 import Home from "./Home/Home";
@@ -7,23 +7,28 @@ import Owner from "./Users/Owner/Owner";
 import Visitor from "./Users/Visitor/Visitor";
 import Income from "./Users/Visitor/Bonuses/Income";
 import Outcome from "./Users/Visitor/Bonuses/Outcome";
+import MainLayout from "./layouts/MainLayout";
+import NFLayout from "./layouts/NFLayouts";
+import Notfound from "./notFound/Notfound";
+// eslint-disable-next-line no-unused-vars
+import appStyle from "./scss/app.scss";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/owner" element={<Owner />} />
-        <Route path="/user" element={<Visitor />} />
-        <Route path="/income" element={<Income />} />
-        <Route path="/outcome" element={<Outcome />} />
-        <Route path="/signup/owner" element={<Navigate to="/owner" />} />
-        <Route path="/signup/user" element={<Navigate to="/user" />} />
-        <Route path="/login/user" element={<Navigate to="/user" />} />
-        <Route path="/income/user" element={<Navigate to="/user" />} />
-        <Route path="/login/owner" element={<Navigate to="/owner" />} />
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/owner" element={<Owner />} />
+          <Route path="/user" element={<Visitor />} />
+          <Route path="/income" element={<Income />} />
+          <Route path="/outcome" element={<Outcome />} />
+        </Route>
+        <Route element={<NFLayout />}>
+          <Route path="*" element={<Notfound />}/>
+        </Route>
       </Routes>
     </>
   );

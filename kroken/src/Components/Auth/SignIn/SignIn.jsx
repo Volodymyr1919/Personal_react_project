@@ -48,11 +48,11 @@ export default function SignIn() {
             switch (resp.who) {
 
               case "visitor":
-                navigate("user");
+                navigate("/user");
                 break;
                 
               case "owner":
-                navigate("owner");
+                navigate("/owner");
                 break;
 
               default:
@@ -74,18 +74,18 @@ export default function SignIn() {
       }
 
     return(
-      <div>
+      <div className="signin">
         <Modal show={show}>
-        <Modal.Header closeButton onClick={handleClose}>
-          <Modal.Title>Error</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {resText}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>Close Modal</Button>
-        </Modal.Footer>
-      </Modal>
+          <Modal.Header closeButton onClick={handleClose}>
+            <Modal.Title>Error</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {resText}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>Close Modal</Button>
+          </Modal.Footer>
+        </Modal>
 
       <form onSubmit={handleSubmit(onSubmit)}>
             <div className="container">

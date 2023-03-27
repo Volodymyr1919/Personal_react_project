@@ -56,7 +56,7 @@ export default function SignUp() {
           }).then((resp) => {
             localStorage.setItem('myAppId', resp);
             if(resp) {
-              who === 'visitor' ? navigate("user") : navigate("owner")
+              who === 'visitor' ? navigate("/user") : navigate("/owner")
             } else {
               return;
             }
@@ -89,7 +89,7 @@ export default function SignUp() {
 
 
     return(
-        <div>
+        <div className="signup">
             <Modal show={show}>
               <Modal.Header closeButton onClick={handleClose}>
                 <Modal.Title>Error</Modal.Title>

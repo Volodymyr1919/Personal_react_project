@@ -18,10 +18,10 @@ export default function Income() {
         .then((res) => {
             if (res.ok) {
                 alert("congrats, you've got 1 point plus");
-                navigate("user");
+                navigate("/user");
             } else {
                 alert("today you already got a 1 point plus");
-                navigate("user");
+                navigate("/user");
             }
         })
     },[navigate])

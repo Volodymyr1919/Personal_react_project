@@ -190,7 +190,7 @@ MongoClient.connect(data.url)
 
     app.use(
         rateLimit({
-          windowMs: 24 * 60 * 60 * 1000,
+          windowMs: 12 * 60 * 60 * 1000,
           max: 1,
           headers: true
         })
