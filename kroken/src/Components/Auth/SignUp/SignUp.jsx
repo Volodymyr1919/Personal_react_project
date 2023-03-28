@@ -35,7 +35,7 @@ export default function SignUp() {
           body: JSON.stringify({
             username        : data.username,
             password        : data.password,
-            business_name   : data.business_name,
+            business_name   : (data.business_name).replace(/ /g,"_"),
             type_business   : data.business_type,
             who             : data.who,
             bonus           : 2

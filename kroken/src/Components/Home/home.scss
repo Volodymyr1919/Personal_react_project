@@ -1,10 +1,22 @@
 @import "../scss/colors.scss";
 
 div.home{
-    height: 100vh;
+    height: calc(100vh + 64px);
     width: 100vw;
     background: rgb(57, 50, 50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     nav{
         background: #4C0013;
+    }
+    p{
+        width: 70%;
+        height: fit-content;
+        border-radius: 15px;
+        background: #36000e;
+        box-sizing: border-box;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     }
 }
