@@ -147,6 +147,7 @@ export default function SignIn() {
                 </div>
             </div>
         </form>
+        <div className="signin__bg"></div>
       </div>
     );
 }
