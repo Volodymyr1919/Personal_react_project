@@ -55,7 +55,7 @@ MongoClient.connect(data.url)
         })
     });
 
-    app.get('/me/:id', (req, res) => {      
+    app.get('/me/:id', (req, res) => {
         let id = new ObjectId(req.params.id);
         usersCollection.findOne({
             _id: id
@@ -64,7 +64,7 @@ MongoClient.connect(data.url)
             if (result) {
                 res.send(result);
             } else {
-                res.sendStatus(404)
+                res.sendStatus(404);
             }
         })
     });

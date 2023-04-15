@@ -10,6 +10,7 @@ import Outcome from "./Users/Visitor/Bonuses/Outcome";
 import MainLayout from "./layouts/MainLayout";
 import NFLayout from "./layouts/NFLayouts";
 import Notfound from "./notFound/Notfound";
+import PrivateLayout from "./layouts/PrivateLayout";
 // eslint-disable-next-line no-unused-vars
 import appStyle from "./scss/app.scss";
 
@@ -21,13 +22,15 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+        </Route>
+        <Route element={<PrivateLayout />}>
           <Route path="/owner" element={<Owner />} />
           <Route path="/user" element={<Visitor />} />
-          <Route path="/income" element={<Income />} />
-          <Route path="/outcome" element={<Outcome />} />
         </Route>
         <Route element={<NFLayout />}>
           <Route path="*" element={<Notfound />}/>
+          <Route path="/income" element={<Income />} />
+          <Route path="/outcome" element={<Outcome />} />
         </Route>
       </Routes>
     </>

@@ -3,9 +3,12 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import { typeList } from "../../TypeList";
+import { _url } from "../../Config";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.css";
 // eslint-disable-next-line no-unused-vars
 import signUp from "./signUp.scss"
+import { faBriefcase, faBusinessTime, faCaretDown, faCheck, faChevronDown, faChevronRight, faClipboardList, faDroplet, faDropletSlash, faList, faList12, faListAlt, faListCheck, faListDots, faListSquares, faListUl, faLock, faSquareCaretDown, faThList, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function SignUp() {
 
@@ -41,7 +44,7 @@ export default function SignUp() {
             bonus           : 2
           }),
         };
-        fetch("http://localhost:3001/signup", requestOptions)
+        fetch(_url + "/signup", requestOptions)
           .then((resp) => {
               switch (resp.status) {
                 case 200:
@@ -108,7 +111,7 @@ export default function SignUp() {
                         <div className="screen__content">
                             <div className="loginSignUp">
                             <div className="login__field">
-                                    <i className="login__icon fas fa-user"></i>
+                                    <FontAwesomeIcon icon={faUser} className="login__icon"></FontAwesomeIcon>
                                     <input
                                         type="text"
                                         className="login__input"
@@ -128,19 +131,21 @@ export default function SignUp() {
                                     <p className="errorMessage">{errors.username && errors.username.message}</p>
                                 </div>
                                 <div className="login__field">
-                                    <i className="login__icon fas fa-user"></i>
-                                    <select {...register("business_type", {
-                                      required: 'Field is required',
-                                      value: business_type,
-                                      onChange: (e) => {
-                                        businessType(e);
-                                      }
-                                    })}>
-                                      {typeList.map(item => <option key={item.value} value={item.value}>{item.name}</option>)}
-                                    </select>
+                                  <FontAwesomeIcon icon={faChevronDown} className="login__icon"></FontAwesomeIcon>
+                                  <select
+                                    className="login__input"
+                                    {...register("business_type", {
+                                    required: 'Field is required',
+                                    value: business_type,
+                                    onChange: (e) => {
+                                      businessType(e);
+                                    }
+                                  })}>
+                                    {typeList.map(item => <option key={item.value} value={item.value}>{item.name}</option>)}
+                                  </select>
                                 </div>
                                 <div className="login__field">
-                                    <i className="login__icon fas fa-user"></i>
+                                    <FontAwesomeIcon icon={faBriefcase} className="login__icon"></FontAwesomeIcon>
                                     <input
                                         type="text"
                                         className="login__input"
@@ -160,19 +165,22 @@ export default function SignUp() {
                                     <p className="errorMessage">{errors.business_name && errors.business_name.message}</p>
                                 </div>
                                 <div className="login__field">
-                                    <select {...register("who", {
-                                      required: 'Field is required',
-                                      value: who,
-                                      onChange: (e) => {
-                                        _who(e)
-                                      }
-                                    })}>
-                                      <option value="visitor">Visitor</option>
-                                      <option value="owner">Owner</option>
-                                    </select>
+                                  <FontAwesomeIcon icon={faChevronDown} className="login__icon"></FontAwesomeIcon>
+                                  <select
+                                    className="login__input"
+                                    {...register("who", {
+                                    required: 'Field is required',
+                                    value: who,
+                                    onChange: (e) => {
+                                      _who(e)
+                                    }
+                                  })}>
+                                    <option value="visitor">Visitor</option>
+                                    <option value="owner">Owner</option>
+                                  </select>
                                 </div>
                                 <div className="login__field">
-                                    <i className="login__icon fas fa-lock"></i>
+                                  <FontAwesomeIcon icon={faLock} className="login__icon"></FontAwesomeIcon>
                                     <input
                                         type="password"
                                         className="login__input"
@@ -193,19 +201,15 @@ export default function SignUp() {
                                 </div>
                                 <button type="submit" className="button login__submit">
                                     <span className="button__text">Sign Up Now</span>
-                                    <i className="button__icon fas fa-chevron-right"></i>
+                                    <FontAwesomeIcon icon={faChevronRight} className="button__icon"></FontAwesomeIcon>
                                 </button>			
                             </div>
                         </div>
-                        <div className="screen__background">
-                            <span className="screen__background__shape screen__background__shape4"></span>
-                            <span className="screen__background__shape screen__background__shape3"></span>		
-                            <span className="screen__background__shape screen__background__shape2"></span>
-                            <span className="screen__background__shape screen__background__shape1"></span>
-                        </div>		
+                        <div className="screen__background"></div>		
                     </div>
                 </div>
             </form>
+            <div className="signin__bg"></div>
         </div>
     );
 }

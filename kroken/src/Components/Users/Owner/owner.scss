@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+@import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
+
+div.page__owner{
+    width: 100vw;
+    height: calc(100vh - 60px);
+    margin-top: 60px;
+    background: url("../../../Assets/img/ian-kelsall-MEUvVqkU3QI-unsplash.jpg");
+	background-position: center center;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    div.owner__about{
+        z-index: 200;
+        height: 400px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 20px;
+        div.alice-carousel{
+            width: 300px;
+            height: 100%;
+            position: relative;
+            background: rgba(0, 0, 0, 0.02);
+            backdrop-filter: blur(8px);
+            box-sizing: border-box;
+            padding: 0 10px;
+            border-radius: 8px;
+            div{
+                div.alice-carousel__wrapper{
+                    ul.alice-carousel__stage{
+                        li.alice-carousel__stage-item{
+                            height: 400px;
+                            div.about__info{
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                flex-direction: column;
+                                width: 100%;
+                                height: 100%;
+                                p{
+                                    font-family: 'Raleway', sans-serif;
+                                    color: rgb(255, 132, 0);
+                                    letter-spacing: 1.5px;
+                                    width: 100%;
+                                }
+                            }
+                            div.about__newOffer{
+                                form{
+                                    display: flex;
+                                    flex-direction: column;
+                                    div.newOffer__form{
+                                        box-sizing: border-box;
+                                        padding: 10px 0;
+                                        span.form__title{
+                                            color: rgb(255, 132, 0);
+                                            line-height: 30px;
+                                        }
+                                        div.MuiFormControl-root{
+                                            label.MuiFormLabel-root{
+                                                color: #aeaeae;
+                                            }
+                                            label.Mui-focused{
+                                                color: rgb(255, 132, 0);
+                                            }
+                                            div.MuiInputBase-root{
+                                                &::before{
+                                                    border-bottom: 1px solid #aeaeae;
+                                                }
+                                                input.MuiInputBase-input{
+                                                    color: #aeaeae;
+                                                }
+                                                &::after{
+                                                    border-bottom: 1px solid rgb(255, 132, 0);
+                                                }
+                                            }
+                                        }
+                                        .errorMessage {
+                                            height: 15px;
+                                            font-size: 12px;
+                                            color: rgb(191, 0, 0);
+                                            display: block;
+                                            font-weight: 700;
+                                        }
+                                    }
+                                    button{
+                                        border: 1px solid rgba(255, 132, 0, 0.436);
+                                        color: rgb(255, 132, 0);
+                                        &:hover{
+                                            background-color: rgba(210, 102, 25, 0.04);
+                                            border: 1px solid rgb(255, 132, 0);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            ul.alice-carousel__dots{
+                padding: 0;
+                margin: 0;
+                position: absolute;
+                left: 45%;
+                bottom: 0;
+                li.alice-carousel__dots-item{
+                    background: rgba(255, 255, 255, 0.476);
+                }
+                li.__active{
+                    background: rgb(255, 132, 0);
+                }
+            }
+        }
+        div.about__features{
+            width: 100%;
+            box-sizing: border-box;
+            padding: 15px 0;
+            div.alice-carousel{
+                width: 100%;
+                background: transparent;
+                backdrop-filter: none;
+                width: 100%;
+                div{
+                    width: 100%;
+                    div.alice-carousel__wrapper{
+                        width: 100%;
+                        ul.alice-carousel__stage{
+                            width: 100%;
+                            li.alice-carousel__stage-item{
+                                width: 100%;
+                                div.features__allUsers{
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    overflow-y: scroll;
+                                    gap: 10px;
+                                    p{
+                                        font-family: 'Barlow', sans-serif;
+                                        color: rgb(255, 132, 0);
+                                        line-height: 30px;
+                                        letter-spacing: 1.5px;
+                                        padding: 0;
+                                        margin: 0;
+                                        width: 100%;
+                                    }
+                                    p.allUsers__user{
+                                        height: 60px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        background: rgba(0, 0, 0, 0.02);
+                                        backdrop-filter: blur(8px);
+                                        border-radius: 10px;
+                                    }
+                                }
+                                div.features__offers{
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    gap: 10px;
+                                    p{
+                                        font-family: 'Barlow', sans-serif;
+                                        color: rgb(255, 132, 0);
+                                        line-height: 30px;
+                                        letter-spacing: 1.5px;
+                                        padding: 0;
+                                        margin: 0;
+                                        width: 100%;
+                                    }
+                                    div.offers__card{
+                                        display: flex;
+                                        flex-direction: column;
+                                        align-items: flex-end;
+                                        justify-content: center;
+                                        background: rgba(0, 0, 0, 0.02);
+                                        backdrop-filter: blur(8px);
+                                        border-radius: 10px;
+                                        box-sizing: border-box;
+                                        padding: 8px;
+                                        p{
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                ul.alice-carousel__dots{
+                    left: 47.7%;
+                }
+            }
+        }
+    }
+
+    div.page__bg{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 33, 0.654);
+        z-index: 100;
+    }
+}

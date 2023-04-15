@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { _url } from "../../Config";
+import { Button } from "@mui/material";
 
 export default function AllOffers(props) {
     
@@ -7,7 +9,7 @@ export default function AllOffers(props) {
 
     useEffect(() => {
         function getAllPosts() {
-            fetch('http://localhost:3001/posts/' + myBusinessN, {
+            fetch(_url + '/posts/' + myBusinessN, {
             method: 'GET',
             headers: {
                 "Content-Type" : "application/json"
@@ -26,7 +28,7 @@ export default function AllOffers(props) {
     const deletePost = (e) => {
         if (window.confirm("Do you want to delete this offer?") === true) {
             console.log(e.target.id);
-            fetch('http://localhost:3001/posts', {
+            fetch(_url + '/posts', {
                 method: 'DELETE',
                 headers: {
                     "Content-Type" : "application/json"
@@ -44,16 +46,25 @@ export default function AllOffers(props) {
     }
 
     return(
-        <>
-            <p>Here is all your offers</p>
+        <div className="features__offers">
+            <p className="offers__title">Here is all your offers</p>
             {offers ? offers.map(post => 
-                <p key={post._id}>
-                    Condition: {post.condition}, Required bonuses: {post.required_bonuses}, Gift: {post.gift}
-                    <button onClick={deletePost} id={post._id}>DELETE</button>
-                </p>)
+                <div className="offers__card" key={post._id}>
+                    <p>Condition: {post.condition}</p>
+                    <p>Required bonuses: {post.required_bonuses}</p>
+                    <p>Gift: {post.gift}</p>
+                    <Button
+                        onClick={deletePost}
+                        id={post._id}
+                        variant="outlined"
+                        color="error"
+                    >
+                        DELETE
+                    </Button>
+                </div>)
             :
                 <p>Sorry, still any offers</p>
             }
-        </>
+        </div>
     );
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { _url } from "../../Config";
 
 export default function AllUsers(props) {
 
@@ -7,7 +8,7 @@ export default function AllUsers(props) {
 
     useEffect(() => {
         function getMyVisitors() {
-            fetch("http://localhost:3001/users", {
+            fetch(_url + "/users", {
             method: 'GET',
             headers: {
                 "Content-Type" : "application/json"
@@ -22,14 +23,14 @@ export default function AllUsers(props) {
     },[myBusiness])
 
     return(
-        <>
-            <p>Here is all your visitors</p>
+        <div className="features__allUsers">
+            <p className="allUsers__title">Here is all your visitors</p>
             {allUsers ? allUsers.map(user => 
-                <p key={user._id}>Visitor: {user.name}; Bonus: {user.bonus}</p>
+                <p className="allUsers__user" key={user._id}>Visitor: {user.name}; Bonus: {user.bonus}</p>
             )
             :
-                <p>Sorry you still have any visitor registered</p>
+                <p className="allUsers__alt">Sorry you still have any visitor registered</p>
             }
-        </>
+        </div>
     );
 }

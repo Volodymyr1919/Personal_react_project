@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { _url } from "../../Config";
 
 export default function OfferHistory(props) {
 
@@ -7,7 +8,7 @@ export default function OfferHistory(props) {
 
     useEffect(() => {
         function getOldOffers() {
-            fetch('http://localhost:3001/oldPosts/' + myBusinessN, {
+            fetch(_url + '/oldPosts/' + myBusinessN, {
             method: 'GET',
             headers: {
                 "Content-Type" : "application/json"
@@ -25,7 +26,7 @@ export default function OfferHistory(props) {
 
     const returnPost = (e) => {
         if (window.confirm("Do you want to return this offer?") === true) {
-            fetch('http://localhost:3001/returnPost', {
+            fetch(_url + '/returnPost', {
                 method: 'POST',
                 headers: {
                     "Content-Type" : "application/json"

@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
+import { _url } from "../../Config";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.css";
 // eslint-disable-next-line no-unused-vars
 import signIn from "./signIn.scss";
+import { faChevronRight, faLock, fas, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function SignIn() {
 
@@ -33,7 +36,7 @@ export default function SignIn() {
             password    : data.password
           }),
         };
-        fetch("http://localhost:3001/login", requestOptions)
+        fetch(_url + "/login", requestOptions)
           .then((resp) => {
             if (resp.ok) {
               return resp.json();
@@ -46,7 +49,6 @@ export default function SignIn() {
           .then((resp) => {
             localStorage.setItem('myAppId', resp._id);
             switch (resp.who) {
-
               case "visitor":
                 navigate("/user");
                 break;
@@ -93,7 +95,7 @@ export default function SignIn() {
                     <div className="screen__content">
                         <div className="login">
                             <div className="login__field">
-                                <i className="login__icon fas fa-user"></i>
+                                <FontAwesomeIcon icon={faUser} className="login__icon"></FontAwesomeIcon>
                                 <input
                                     type="text"
                                     className="login__input"
@@ -113,7 +115,7 @@ export default function SignIn() {
                                 <p className="errorMessage">{errors.username && errors.username.message}</p>
                             </div>
                             <div className="login__field">
-                                <i className="login__icon fas fa-lock"></i>
+                                <FontAwesomeIcon icon={faLock} className="login__icon"></FontAwesomeIcon>
                                 <input
                                     type="password"
                                     className="login__input"
@@ -134,16 +136,11 @@ export default function SignIn() {
                             </div>
                             <button type="submit" className="button login__submit">
                                 <span className="button__text">Log In Now</span>
-                                <i className="button__icon fas fa-chevron-right"></i>
+                                <FontAwesomeIcon icon={faChevronRight} className="button__icon"></FontAwesomeIcon>
                             </button>				
                         </div>
                     </div>
-                    <div className="screen__background">
-                        <span className="screen__background__shape screen__background__shape4"></span>
-                        <span className="screen__background__shape screen__background__shape3"></span>		
-                        <span className="screen__background__shape screen__background__shape2"></span>
-                        <span className="screen__background__shape screen__background__shape1"></span>
-                    </div>		
+                    <div className="screen__background"></div>		
                 </div>
             </div>
         </form>

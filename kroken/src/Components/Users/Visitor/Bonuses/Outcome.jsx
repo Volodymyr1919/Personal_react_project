@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import { useForm } from "react-hook-form";
+import { _url } from "../../../Config";
+import { TextField, Button } from "@mui/material";
 
 export default function Outcome() {
 
@@ -23,7 +25,7 @@ export default function Outcome() {
             bonus : data.bonus
           }),
         };
-        fetch("http://localhost:3001/spendbonus", requestOptions)
+        fetch(_url + "/spendbonus", requestOptions)
           .then((resp) => {
             return resp.json();
           })
@@ -33,21 +35,26 @@ export default function Outcome() {
       };
 
     return(
-        <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <input
-                    type="number"
-                    {...register("bonus", {
-                        required: 'Field is required',
-                        value: bonus,
-                        onChange: (e) => {
-                            setBonus(e.target.value)
-                        }
-                    })}
-                />
-                <p className="errorMessage">{errors.bonus && errors.bonus.message}</p>
-                <button type="submit">Spend bonus</button>
-            </form>
-        </div>
+      <div className="personalPage__bonus">
+          <form onSubmit={handleSubmit(onSubmit)}>
+              <TextField
+                  id="standard-basic"
+                  label="Prise"
+                  variant="standard"
+                  type="number"
+                  className="bonus__withdrow"
+                  {...register("bonus", {
+                      required: 'Field is required',
+                      value: bonus,
+                      onChange: (e) => {
+                          setBonus(e.target.value)
+                      }
+                  })}
+              />
+              <p className="errorMessage">{errors.bonus && errors.bonus.message}</p>
+              <Button variant="outlined" type="submit">Spend bonus</Button>
+          </form>
+          <div className="personalPage__bg"></div>
+      </div>
     );
 }
