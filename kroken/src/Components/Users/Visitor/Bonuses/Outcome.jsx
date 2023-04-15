@@ -2,10 +2,15 @@ import React, {useState} from "react";
 import { useForm } from "react-hook-form";
 import { _url } from "../../../Config";
 import { TextField, Button } from "@mui/material";
+import { observer } from "mobx-react";
+import { useStores } from "../../../Stores/MainStore";
+import InfoAlert from "../../../Partial/InfoAlert";
 
-export default function Outcome() {
+const Outcome = observer(() => {
 
-    const [bonus, setBonus] = useState("");
+  const { RequestStore, ConfigStore } = useStores();
+
+  const [bonus, setBonus] = useState("");
 
     const {
         register,
@@ -15,23 +20,26 @@ export default function Outcome() {
         mode: "onChange",
       });
       const onSubmit = (data) => {
-        const requestOptions = {
-          method: "POST",
-          headers: {
-            "Content-Type"      : "application/json"
-          },
-          body: JSON.stringify({
+        new Promise((resolve, reject) => {
+          resolve();
+        })
+        .then(() => {
+          return RequestStore.doPost(ConfigStore._url + "/spendbonus", {
             id : localStorage.getItem("myAppId"),
             bonus : data.bonus
-          }),
-        };
-        fetch(_url + "/spendbonus", requestOptions)
-          .then((resp) => {
-            return resp.json();
           })
-          .then((resp) => {
-            console.log(resp);
-          })
+        })
+        .then((res) => {
+          if (res.status === 400) {
+            ConfigStore.setSeverity("error");
+            ConfigStore.setTextAlert("Not enough bonuses");
+            ConfigStore.setIsInfoAlertShow(true);
+          } else {
+            ConfigStore.setSeverity("success");
+            ConfigStore.setTextAlert("Successfuly");
+            ConfigStore.setIsInfoAlertShow(true);
+          }
+        })
       };
 
     return(
@@ -55,6 +63,9 @@ export default function Outcome() {
               <Button variant="outlined" type="submit">Spend bonus</Button>
           </form>
           <div className="personalPage__bg"></div>
+          <InfoAlert />
       </div>
     );
-}
+});
+
+export default Outcome;

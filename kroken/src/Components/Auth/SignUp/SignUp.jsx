@@ -1,26 +1,27 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { Modal, Button } from "react-bootstrap";
+import { observer } from "mobx-react";
+import { useStores } from "../../Stores/MainStore";
+import ErrorModal from "../../Partial/ErrorModal";
 import { typeList } from "../../TypeList";
-import { _url } from "../../Config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.css";
 // eslint-disable-next-line no-unused-vars
 import signUp from "./signUp.scss"
-import { faBriefcase, faBusinessTime, faCaretDown, faCheck, faChevronDown, faChevronRight, faClipboardList, faDroplet, faDropletSlash, faList, faList12, faListAlt, faListCheck, faListDots, faListSquares, faListUl, faLock, faSquareCaretDown, faThList, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBriefcase, faChevronDown, faChevronRight, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 
-export default function SignUp() {
+const SignUp = observer(() => {
 
-    const navigate = useNavigate();
+  const { RequestStore, ConfigStore } = useStores();
+
+  const navigate = useNavigate();
 
     const [username, setUsername]               = useState("");
     const [business_type, setBusiness_type]     = useState("restaurant");
     const [business_name, setBusiness_name]     = useState("");
     const [who, setWho]                         = useState("visitor");
     const [password, setPassword]               = useState("");
-    const [show, setShow]                       = useState(false);
-    const [resText, setResText]                 = useState("");
 
     const {
         register,
@@ -30,81 +31,33 @@ export default function SignUp() {
         mode: "onChange",
       });
       const onSubmit = (data) => {
-        const requestOptions = {
-          method: "POST",
-          headers: {
-            "Content-Type"      : "application/json"
-          },
-          body: JSON.stringify({
-            username        : data.username,
+        new Promise((resolve, reject) => {
+          resolve();
+        })
+        .then(() => {
+          return RequestStore.doPost(ConfigStore._url + "/signup", {
+            username        : (data.username).replace(/ /g,"_"),
             password        : data.password,
             business_name   : (data.business_name).replace(/ /g,"_"),
             type_business   : data.business_type,
             who             : data.who,
             bonus           : 2
-          }),
-        };
-        fetch(_url + "/signup", requestOptions)
-          .then((resp) => {
-              switch (resp.status) {
-                case 200:
-                  return resp.json();
-                case 403:
-                  setShow(true);
-                  setResText("Username should be unique");
-                  break;
-                default:
-                  break;
-              }
-          }).then((resp) => {
-            localStorage.setItem('myAppId', resp);
-            if(resp) {
-              who === 'visitor' ? navigate("/user") : navigate("/owner")
-            } else {
-              return;
-            }
           })
+        })
+        .then((res) => {
+          if (res.acknowledged) {
+            localStorage.setItem('myAppId', res.insertedId);
+            who === 'visitor' ? navigate("/user") : navigate("/owner");
+          } else {
+            res.status === 403 ? ConfigStore.setErr("Username already existing") : ConfigStore.setErr(res.statusText);
+            ConfigStore.setIsShow(true);
+          }
+        })
       };
-
-      function _userName(e) {
-        setUsername(e.target.value);
-      };
-    
-      function _userPassword(e) {
-        setPassword(e.target.value);
-      };
-
-      function businessType(e) {
-        setBusiness_type(e.target.value);
-      };
-
-      function businessName(e) {
-        setBusiness_name(e.target.value);
-      };
-
-      function _who(e) {
-        setWho(e.target.value);
-      };
-
-      function handleClose() {
-        setShow(false);
-      }
-
 
     return(
         <div className="signup">
-            <Modal show={show}>
-              <Modal.Header closeButton onClick={handleClose}>
-                <Modal.Title>Error</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                {resText}
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>Close Modal</Button>
-              </Modal.Footer>
-            </Modal>
-
+          <ErrorModal />
           <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="container">
                     <div className="screen">
@@ -124,7 +77,7 @@ export default function SignUp() {
                                             },
                                             value: username,
                                             onChange: (e) => {
-                                                _userName(e);
+                                              setUsername(e.target.value);
                                             }
                                         })}
                                     />
@@ -138,7 +91,7 @@ export default function SignUp() {
                                     required: 'Field is required',
                                     value: business_type,
                                     onChange: (e) => {
-                                      businessType(e);
+                                      setBusiness_type(e.target.value);
                                     }
                                   })}>
                                     {typeList.map(item => <option key={item.value} value={item.value}>{item.name}</option>)}
@@ -158,7 +111,7 @@ export default function SignUp() {
                                             },
                                             value: business_name,
                                             onChange: (e) => {
-                                                businessName(e);
+                                              setBusiness_name(e.target.value);
                                             }
                                         })}
                                     />
@@ -172,7 +125,7 @@ export default function SignUp() {
                                     required: 'Field is required',
                                     value: who,
                                     onChange: (e) => {
-                                      _who(e)
+                                      setWho(e.target.value);
                                     }
                                   })}>
                                     <option value="visitor">Visitor</option>
@@ -193,7 +146,7 @@ export default function SignUp() {
                                             },
                                             value: password,
                                             onChange: (e) => {
-                                                _userPassword(e);
+                                              setPassword(e.target.value);
                                             }
                                         })}
                                     />
@@ -212,4 +165,6 @@ export default function SignUp() {
             <div className="signin__bg"></div>
         </div>
     );
-}
+});
+
+export default SignUp;

@@ -115,25 +115,31 @@ div.page__owner{
         }
         div.about__features{
             width: 100%;
+            height: calc(100vh - 460px);
             box-sizing: border-box;
             padding: 15px 0;
             div.alice-carousel{
                 width: 100%;
                 background: transparent;
                 backdrop-filter: none;
-                width: 100%;
+                height: 100%;
                 div{
                     width: 100%;
+                    height: 100%;
                     div.alice-carousel__wrapper{
                         width: 100%;
+                        height: 100%;
                         ul.alice-carousel__stage{
                             width: 100%;
+                            height: 100%;
                             li.alice-carousel__stage-item{
                                 width: 100%;
+                                height: 100%;
                                 div.features__allUsers{
                                     display: flex;
                                     flex-direction: column;
                                     align-items: center;
+                                    height: 100%;
                                     overflow-y: scroll;
                                     gap: 10px;
                                     p{
@@ -160,6 +166,8 @@ div.page__owner{
                                     flex-direction: column;
                                     align-items: center;
                                     gap: 10px;
+                                    height: 100%;
+                                    overflow-y: scroll;
                                     p{
                                         font-family: 'Barlow', sans-serif;
                                         color: rgb(255, 132, 0);
@@ -179,6 +187,7 @@ div.page__owner{
                                         border-radius: 10px;
                                         box-sizing: border-box;
                                         padding: 8px;
+                                        height: fit-content;
                                         p{
                                             display: flex;
                                             align-items: center;
@@ -191,7 +200,7 @@ div.page__owner{
                     }
                 }
                 ul.alice-carousel__dots{
-                    left: 47.7%;
+                    left: 45%;
                 }
             }
         }

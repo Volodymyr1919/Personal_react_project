@@ -19,7 +19,7 @@ MongoClient.connect(data.url)
             usersCollection     = db.collection('users'),
             postsCollection     = db.collection('rest_posts');
 
-    app.post('/login', (req, res) => {
+    app.post('/signin', (req, res) => {
         usersCollection.findOne({
             name: req.body.username, 
             password: req.body.password
@@ -28,7 +28,7 @@ MongoClient.connect(data.url)
             if (result) {
                 res.send(result);
             } else {
-                res.sendStatus(404)
+                res.sendStatus(404);
             }
         })
     });
@@ -49,7 +49,7 @@ MongoClient.connect(data.url)
                     who: req.body.who,
                     bonus: req.body.bonus
                 }).then(resp => {
-                    res.send(resp.insertedId);
+                    res.send(resp);
                 })
             }
         })
@@ -172,25 +172,30 @@ MongoClient.connect(data.url)
 
     app.post('/spendbonus', (req, res) => {
         let id = new ObjectId(req.body.id);
-        usersCollection.updateOne(
-            {
-                _id: id,
-                bonus: {$gt: 0}
-            },
-            {$inc: {bonus: -req.body.bonus}}
+        let amount = req.body.bonus;
+        usersCollection.find(
+            { _id: id }
         )
+        .toArray()
         .then(result => {
-            if (result) {
-                res.send(result);
+            if (result[0].bonus >= amount) {
+                usersCollection.updateOne(
+                    { _id: id },
+                    { $inc: {bonus: -amount} }
+                )
+                .then(
+                    res.send(result)
+                )
             } else {
-                res.sendStatus(404)
+                res.sendStatus(400)
             }
         })
     });
 
     app.use(
         rateLimit({
-          windowMs: 12 * 60 * 60 * 1000,
+        //   windowMs: 12 * 60 * 60 * 1000,
+          windowMs: 5 * 60 * 1000,
           max: 1,
           headers: true
         })
@@ -208,7 +213,7 @@ MongoClient.connect(data.url)
             if (result) {
                 res.send(result);
             } else {
-                res.sendStatus(404)
+                res.sendStatus(400)
             }
         })
     });

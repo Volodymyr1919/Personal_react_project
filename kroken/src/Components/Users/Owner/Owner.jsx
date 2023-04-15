@@ -22,7 +22,9 @@ export default function Owner() {
             await fetch(_url + '/me/' + localStorage.getItem("myAppId"), {
                 method: 'GET',
                 headers: {
-                    "Content-Type" : "application/json"
+                    "Content-Type"                : "application/json",
+                    "Access-Control-Allow-Origin" : "*",
+                    "ngrok-skip-browser-warning"  : true
                 }
             })
             .then((res) => {
@@ -128,7 +130,7 @@ export default function Owner() {
                     </div>
                 </AliceCarousel>
                 <div className="about__features">
-                    <AliceCarousel disableButtonsControls='true' touchTracking='true' touchMoveDefaultEvents='false'>
+                    <AliceCarousel disableButtonsControls='true'>
                         <AllUsers myData={myData} />
                         <AllOffers myData={myData} />
                         <OfferHistory myData={myData} />

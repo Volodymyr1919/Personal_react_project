@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { _url } from "../../Config";
+import { Button } from "@mui/material";
 
 export default function OfferHistory(props) {
 
@@ -7,22 +8,34 @@ export default function OfferHistory(props) {
     const [oldOffers, setOldOffers] = useState([]);
 
     useEffect(() => {
-        function getOldOffers() {
-            fetch(_url + '/oldPosts/' + myBusinessN, {
-            method: 'GET',
-            headers: {
-                "Content-Type" : "application/json"
-            }
+        if(myBusinessN) {
+            new Promise((resolve, reject) => {
+                resolve();
             })
-            .then((res) => {
-                return res.json();
+            .then(() => {
+                getOldOffers();
             })
-            .then((res) => {
-                setOldOffers(res);
-            })
+        } else {
+            return;
         }
-        getOldOffers();
-    },[myBusinessN])
+    },[myBusinessN]);
+
+    function getOldOffers() {
+        fetch(_url + '/oldPosts/' + myBusinessN, {
+        method: 'GET',
+        headers: {
+            "Content-Type"                : "application/json",
+            "Access-Control-Allow-Origin" : "*",
+            "ngrok-skip-browser-warning"  : true
+        }
+        })
+        .then((res) => {
+            return res.json();
+        })
+        .then((res) => {
+            setOldOffers(res);
+        })
+    }
 
     const returnPost = (e) => {
         if (window.confirm("Do you want to return this offer?") === true) {
@@ -44,15 +57,26 @@ export default function OfferHistory(props) {
     }
 
     return(
-        <>
-            <p>Here is your deleted offers</p>
-            {oldOffers ? oldOffers.map(post => <p key={post._id}>
-                    Condition: {post.condition}, Required bonuses: {post.required_bonuses}, Gift: {post.gift}
-                    <button onClick={returnPost} id={post._id}>RETURN</button>
-                </p>)
+        <div className="features__offers">
+            <p className="offers__title">Here is your deleted offers</p>
+            {oldOffers ? 
+                oldOffers.map(post => 
+                <div className="offers__card" key={post._id}>
+                    <p>Condition: {post.condition}</p>
+                    <p>Required bonuses: {post.required_bonuses}</p>
+                    <p>Gift: {post.gift}</p>
+                    <Button
+                        onClick={returnPost}
+                        id={post._id}
+                        variant="outlined"
+                        color="success"
+                    >
+                        RETURN
+                    </Button>
+                </div>)
             :
                 <p>Sorry, any deleted offers</p>
             }
-        </>
+        </div>
     );
 }

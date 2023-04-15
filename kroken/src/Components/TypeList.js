@@ -1,5 +1,5 @@
 export const typeList = [
-   {value: "restaurant", name: "Restaurant"},
+    {value: "restaurant", name: "Restaurant"},
     {value: "hairdressing_salon", name: "Hairdressing salon"},
     {value: "gas_station", name: "Gas station"},
     {value: "auto_repair_shop", name: "Auto repair shop"},

@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { Modal, Button } from "react-bootstrap";
-import { _url } from "../../Config";
+import { observer } from "mobx-react";
+import { useStores } from "../../Stores/MainStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ErrorModal from "../../Partial/ErrorModal";
 import "bootstrap/dist/css/bootstrap.css";
 // eslint-disable-next-line no-unused-vars
 import signIn from "./signIn.scss";
-import { faChevronRight, faLock, fas, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 
-export default function SignIn() {
+const SignIn = observer(() => {
 
-    const navigate = useNavigate();
+  const { RequestStore, ConfigStore } = useStores();
 
-    const [username, setUsername]   = useState("");
-    const [password, setPassword]   = useState("");
-    const [show, setShow]           = useState(false);
-    const [resText, setResText]     = useState("");
+  const navigate = useNavigate();
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     const {
         register,
@@ -26,29 +27,19 @@ export default function SignIn() {
         mode: "onChange",
       });
       const onSubmit = (data) => {
-        const requestOptions = {
-          method: "POST",
-          headers: {
-            "Content-Type"      : "application/json"
-          },
-          body: JSON.stringify({
-            username    : data.username,
-            password    : data.password
-          }),
-        };
-        fetch(_url + "/login", requestOptions)
-          .then((resp) => {
-            if (resp.ok) {
-              return resp.json();
-            } else {
-              console.log(resp);
-              setShow(true);
-              setResText(resp.statusText);
-            }
+        new Promise((resolve, reject) => {
+          resolve();
+        })
+        .then(() => {
+          return RequestStore.doPost(ConfigStore._url + "/signin", {
+            username : data.username,
+            password : data.password
           })
-          .then((resp) => {
-            localStorage.setItem('myAppId', resp._id);
-            switch (resp.who) {
+        })
+        .then((res) => {
+          if (res._id) {
+            localStorage.setItem('myAppId', res._id);
+            switch (res.who) {
               case "visitor":
                 navigate("/user");
                 break;
@@ -60,91 +51,74 @@ export default function SignIn() {
               default:
                 break;
             }
-          })
+          } else {
+            res.status === 404 ? ConfigStore.setErr("User not found") : ConfigStore.setErr(res.statusText);
+            ConfigStore.setIsShow(true);
+          }
+        })
       };
-
-      function _userName(e) {
-        setUsername(e.target.value);
-      };
-    
-      function _userPassword(e) {
-        setPassword(e.target.value);
-      };
-
-      function handleClose() {
-        setShow(false);
-      }
 
     return(
       <div className="signin">
-        <Modal show={show}>
-          <Modal.Header closeButton onClick={handleClose}>
-            <Modal.Title>Error</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {resText}
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>Close Modal</Button>
-          </Modal.Footer>
-        </Modal>
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="container">
-                <div className="screen">
-                    <div className="screen__content">
-                        <div className="login">
-                            <div className="login__field">
-                                <FontAwesomeIcon icon={faUser} className="login__icon"></FontAwesomeIcon>
-                                <input
-                                    type="text"
-                                    className="login__input"
-                                    placeholder="User name / Email"
-                                    {...register("username", {
-                                        required: 'Field is required',
-                                        minLength: {
-                                            value: 4,
-                                            message: "Minimum 4 symbols"
-                                        },
-                                        value: username,
-                                        onChange: (e) => {
-                                            _userName(e);
-                                        }
-                                    })}
-                                />
-                                <p className="errorMessage">{errors.username && errors.username.message}</p>
-                            </div>
-                            <div className="login__field">
-                                <FontAwesomeIcon icon={faLock} className="login__icon"></FontAwesomeIcon>
-                                <input
-                                    type="password"
-                                    className="login__input"
-                                    placeholder="Password"
-                                    {...register("password", {
-                                        required: 'Field is required',
-                                        minLength: {
-                                            value: 6,
-                                            message: "Minimum 6 symbols"
-                                        },
-                                        value: password,
-                                        onChange: (e) => {
-                                            _userPassword(e);
-                                        }
-                                    })}
-                                />
-                                <p className="errorMessage">{errors.password && errors.password.message}</p>
-                            </div>
-                            <button type="submit" className="button login__submit">
-                                <span className="button__text">Log In Now</span>
-                                <FontAwesomeIcon icon={faChevronRight} className="button__icon"></FontAwesomeIcon>
-                            </button>				
-                        </div>
+        <ErrorModal />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="container">
+            <div className="screen">
+              <div className="screen__content">
+                <div className="login">
+                    <div className="login__field">
+                        <FontAwesomeIcon icon={faUser} className="login__icon"></FontAwesomeIcon>
+                        <input
+                            type="text"
+                            className="login__input"
+                            placeholder="User name / Email"
+                            {...register("username", {
+                                required: 'Field is required',
+                                minLength: {
+                                    value: 4,
+                                    message: "Minimum 4 symbols"
+                                },
+                                value: username,
+                                onChange: (e) => {
+                                  setUsername(e.target.value);
+                                }
+                            })}
+                        />
+                        <p className="errorMessage">{errors.username && errors.username.message}</p>
                     </div>
-                    <div className="screen__background"></div>		
+                    <div className="login__field">
+                        <FontAwesomeIcon icon={faLock} className="login__icon"></FontAwesomeIcon>
+                        <input
+                            type="password"
+                            className="login__input"
+                            placeholder="Password"
+                            {...register("password", {
+                                required: 'Field is required',
+                                minLength: {
+                                    value: 6,
+                                    message: "Minimum 6 symbols"
+                                },
+                                value: password,
+                                onChange: (e) => {
+                                  setPassword(e.target.value);
+                                }
+                            })}
+                        />
+                        <p className="errorMessage">{errors.password && errors.password.message}</p>
+                    </div>
+                    <button type="submit" className="button login__submit">
+                        <span className="button__text">Log In Now</span>
+                        <FontAwesomeIcon icon={faChevronRight} className="button__icon"></FontAwesomeIcon>
+                    </button>				
                 </div>
+              </div>
+              <div className="screen__background"></div>		
             </div>
+          </div>
         </form>
         <div className="signin__bg"></div>
       </div>
     );
-}
+});
+
+export default SignIn;

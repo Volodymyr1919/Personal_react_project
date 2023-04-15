@@ -1,36 +1,41 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { _url } from "../../../Config";
+import { observer } from "mobx-react";
+import { useStores } from "../../../Stores/MainStore";
+import InfoAlert from "../../../Partial/InfoAlert";
 import bonus from "./bonus.scss";
 
-export default function Income() {
+const Income = observer(() => {
 
-    const navigate = useNavigate();
+    const { RequestStore, ConfigStore } = useStores();
 
-    // useEffect(() => {
-    //     fetch(_url + '/getbonus', {
-    //         method: 'POST',
-    //         headers: {
-    //             "Content-Type" : "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //             id : localStorage.getItem("myAppId")
-    //         })
-    //     })
-    //     .then((res) => {
-    //         if (res.ok) {
-    //             alert("congrats, you've got 1 point plus");
-    //             navigate("/user");
-    //         } else {
-    //             alert("today you already got a 1 point plus");
-    //             navigate("/user");
-    //         }
-    //     })
-    // },[navigate])
+    useEffect(() => {
+        new Promise((resolve, reject) => {
+            resolve();
+        })
+        .then(() => {
+            return RequestStore.doPost(ConfigStore._url + "/getbonus", {
+                id : localStorage.getItem("myAppId")
+            })
+        })
+        .then((res) => {
+            if (res.acknowledged && (res.matchedCount === 1)) {
+                ConfigStore.setSeverity("success");
+                ConfigStore.setTextAlert("Congrats you've got point plus");
+                ConfigStore.setIsInfoAlertShow(true);
+            } else {
+                ConfigStore.setSeverity("error");
+                ConfigStore.setTextAlert("You already got the point");
+                ConfigStore.setIsInfoAlertShow(true);
+            }
+        })
+    },[RequestStore, ConfigStore])
 
     return(
         <div className="personalPage__bonus">
             <div className="personalPage__bg"></div>
+            <InfoAlert />
         </div>
     );
-}
+});
+
+export default Income;

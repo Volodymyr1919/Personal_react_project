@@ -29,6 +29,9 @@ div.personalPage__bonus{
                 &::before{
                     border-bottom: 1px solid #aeaeae;
                 }
+                input.MuiInputBase-input{
+                    color: #aeaeae;
+                }
                 &::after{
                     border-bottom: 1px solid #fff;
                 }

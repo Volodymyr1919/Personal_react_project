@@ -1,32 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { _url } from "../../Config";
 import Offers from "./Offers";
+import { observer } from "mobx-react";
+import { useStores } from "../../Stores/MainStore";
 // eslint-disable-next-line no-unused-vars
 import visitor from "./visitor.scss";
 
-export default function Visitor() {
+const Visitor = observer(() => {
+
+    const { RequestStore, ConfigStore } = useStores();
 
     const [myData, setMyData] = useState("");
 
     useEffect(() => {
-        getMyData();
-    }, [])
-
-    async function getMyData() {
-        await fetch(_url + '/me/' + localStorage.getItem("myAppId"), {
-            method: 'GET',
-            headers: {
-                "Content-Type" : "application/json",
-                "Access-Control-Allow-Origin": "*"
-            }
+        new Promise((resolve, reject) => {
+            resolve();
         })
-        .then((res) => {
-            return res.json();
+        .then(() => {
+            return RequestStore.doGet(ConfigStore._url + "/me/" + localStorage.getItem("myAppId"))
         })
         .then((res) => {
             setMyData(res);
         })
-    };
+    }, [RequestStore, ConfigStore])
 
     return(
         <div className="page__visitor">
@@ -41,4 +36,6 @@ export default function Visitor() {
             <div className="page__bg"></div>
         </div>
     );
-}
+});
+
+export default Visitor;

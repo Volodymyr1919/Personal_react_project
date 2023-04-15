@@ -7,20 +7,33 @@ export default function AllUsers(props) {
     const [allUsers, setAllUsers] = useState([]);
 
     useEffect(() => {
-        function getMyVisitors() {
-            fetch(_url + "/users", {
-            method: 'GET',
-            headers: {
-                "Content-Type" : "application/json"
-              },
-            }).then((res) => {
-                return res.json();
-            }).then((res) => {
-                setAllUsers(res.filter(item => item.business_name === myBusiness));
+        if(myBusiness) {
+            new Promise((resolve, reject) => {
+                resolve();
             })
+            .then(() => {
+                getMyVisitors();
+            })
+        } else {
+            return;
         }
-        getMyVisitors();
-    },[myBusiness])
+        
+    },[myBusiness]);
+
+    function getMyVisitors() {
+        fetch(_url + "/users", {
+        method: 'GET',
+        headers: {
+            "Content-Type"                : "application/json",
+            "Access-Control-Allow-Origin" : "*",
+            "ngrok-skip-browser-warning"  : true
+          },
+        }).then((res) => {
+            return res.json();
+        }).then((res) => {
+            setAllUsers(res.filter(item => item.business_name === myBusiness));
+        })
+    }
 
     return(
         <div className="features__allUsers">

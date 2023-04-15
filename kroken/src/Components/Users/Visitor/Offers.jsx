@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { _url } from "../../Config";
+import { observer } from "mobx-react";
+import { useStores } from "../../Stores/MainStore";
 
-export default function Offers(props) {
+const Offers = observer((props) => {
+
+    const { RequestStore, ConfigStore } = useStores();
 
     const { myData } = props;
 
     const [posts, setPosts] = useState("");
 
     useEffect(() => {
-        async function getPosts() {
-            await fetch(_url + '/posts/' + myData.business_name, {
-                method: 'GET',
-                headers: {
-                    "Content-Type" : "application/json"
-                }
+        if(myData) {
+            new Promise((resolve, reject) => {
+                resolve();
             })
-            .then((res) => {
-                return res.json();
+            .then(() => {
+                return RequestStore.doGet(ConfigStore._url + "/posts/" + myData.business_name)
             })
             .then((res) => {
                 setPosts(res);
             })
+        } else {
+            return;
         }
-        getPosts();
-    }, [myData])
+    }, [myData, RequestStore, ConfigStore]);
 
     return(
         <div className="about__offers">
@@ -40,4 +41,5 @@ export default function Offers(props) {
             }
         </div>
     );
-}
+});
+export default Offers;

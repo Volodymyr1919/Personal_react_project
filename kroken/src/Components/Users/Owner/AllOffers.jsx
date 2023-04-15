@@ -8,22 +8,34 @@ export default function AllOffers(props) {
     const [offers, setOffers] = useState([]);
 
     useEffect(() => {
-        function getAllPosts() {
-            fetch(_url + '/posts/' + myBusinessN, {
-            method: 'GET',
-            headers: {
-                "Content-Type" : "application/json"
-            }
+        if(myBusinessN) {
+            new Promise((resolve, reject) => {
+                resolve();
             })
-            .then((res) => {
-                return res.json();
+            .then(() => {
+                getAllPosts();
             })
-            .then((res) => {
-                setOffers(res);
-            })
+        } else {
+            return;
         }
-        getAllPosts();
     },[myBusinessN])
+
+    function getAllPosts() {
+        fetch(_url + '/posts/' + myBusinessN, {
+        method: 'GET',
+        headers: {
+            "Content-Type"                : "application/json",
+            "Access-Control-Allow-Origin" : "*",
+            "ngrok-skip-browser-warning"  : true
+        }
+        })
+        .then((res) => {
+            return res.json();
+        })
+        .then((res) => {
+            setOffers(res);
+        })
+    }
 
     const deletePost = (e) => {
         if (window.confirm("Do you want to delete this offer?") === true) {
@@ -31,7 +43,9 @@ export default function AllOffers(props) {
             fetch(_url + '/posts', {
                 method: 'DELETE',
                 headers: {
-                    "Content-Type" : "application/json"
+                    "Content-Type"                : "application/json",
+                    "Access-Control-Allow-Origin" : "*",
+                    "ngrok-skip-browser-warning"  : true
                 },
                 body: JSON.stringify({
                     id: e.target.id,
