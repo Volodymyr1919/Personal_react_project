@@ -1,26 +1,43 @@
 @import "../scss/colors.scss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Petit+Formal+Script&display=swap');
 
 div.home{
     height: 100vh;
     width: 100vw;
     background: rgb(57, 50, 50);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-image: url("../../Assets/img/ian-kelsall-MEUvVqkU3QI-unsplash.jpg");
     background-position: center center;
     background-size: cover;
     position: relative;
-    p{
+    div.home__about{
         width: 70%;
         height: fit-content;
         border-radius: 15px;
-        background: #36000e96;
+        background: #36000eb4;
         box-sizing: border-box;
         padding: 20px;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
         color: rgb(190, 190, 190);
         z-index: 200;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        p.about__title{
+            font-family: 'Roboto Slab', serif;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: rgb(255, 132, 0);
+        }
+        p.about__users{
+            font-family: 'Montserrat', sans-serif;
+        }
     }
     div.home__bg{
         position: absolute;
@@ -30,5 +47,47 @@ div.home{
         height: 100%;
         background: rgba(0, 0, 33, 0.654);
         z-index: 100;
+    }
+    footer{
+        width: 100%;
+        height: 60px;
+        background: #4C0013;
+        position: fixed;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 200;
+        font-family: 'Montserrat', sans-serif;
+        color: rgb(196, 196, 196);
+        p{
+            padding: 0;
+            margin: 0;
+        }
+        p.footer__me{
+            font-family: 'Petit Formal Script', cursive;
+        }
+    }
+}
+
+.homeAbout{
+    div.MuiPaper-root{
+        max-width: 700px;
+        height: 500px;
+        div.MuiDialogContent-root{
+            box-sizing: border-box;
+            height: calc(100% - 92px);
+            p{
+                height: 100%;
+                width: 100%;
+                box-sizing: border-box;
+                padding: 20px 20px 0 20px;
+                margin-bottom: 20px;
+                font-family: 'Montserrat', sans-serif;
+            }
+        }
+        div.MuiDialogActions-root{
+            padding: 0;
+        }
     }
 }

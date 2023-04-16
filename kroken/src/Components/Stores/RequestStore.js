@@ -79,11 +79,13 @@ export default class RequestStore {
         })
     };
 
-    doDelete(url) {
+    doDelete(url, data) {
         this.url = url;
+        this.data = data;
         return fetch(this.url, {
             method: this.requestTypes.delete,
-            headers: this.headers()
+            headers: this.headers(),
+            body: JSON.stringify(this.data)
         })
         .then((response) => {
             if(response.ok) {

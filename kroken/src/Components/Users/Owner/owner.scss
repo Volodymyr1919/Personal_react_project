@@ -71,6 +71,22 @@ div.page__owner{
                                                 }
                                                 input.MuiInputBase-input{
                                                     color: #aeaeae;
+                                                    &:-webkit-autofill{
+                                                        transition: background-color 5000s;
+                                                          -webkit-text-fill-color: #ffffff99 !important;
+                                                        &:hover{
+                                                            transition: background-color 5000s;
+                                                              -webkit-text-fill-color: #ffffff99 !important;
+                                                        }
+                                                        &:focus{
+                                                            transition: background-color 5000s;
+                                                              -webkit-text-fill-color: #ffffff99 !important;
+                                                        }
+                                                        &:active{
+                                                            transition: background-color 5000s;
+                                                              -webkit-text-fill-color: #ffffff99 !important;
+                                                        }
+                                                    }
                                                 }
                                                 &::after{
                                                     border-bottom: 1px solid rgb(255, 132, 0);

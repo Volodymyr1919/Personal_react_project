@@ -1,0 +1,33 @@
+div.MuiDialog-container{
+    div.MuiPaper-root{
+        background: none;
+        h2{
+            background: #4C0013;
+            color: rgba(255, 132, 0, 0.849);
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            padding: 5px 25px;
+            font-size: 1.2rem;
+        }
+        div.MuiDialogContent-root{
+            background: rgba(0, 0, 0, 0.02);
+            backdrop-filter: blur(8px);
+            padding: 0;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            p{
+                color: #aeaeae;
+            }
+        }
+        div.MuiDialogActions-root{
+            background: #4C0013;
+            button{
+                color: #a23c3c;
+                font-weight: 600;
+            }
+        }
+    }
+}

@@ -113,8 +113,8 @@ MongoClient.connect(data.url)
                     required_bonuses: req.body.required_bonuses,
                     gift: req.body.gift,
                     deleted : false
-                }).then(() => {
-                    res.sendStatus(200);
+                }).then((resp) => {
+                    res.send(resp);
                 })
             }
         })

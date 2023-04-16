@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { _url } from "../../Config";
+import { observer } from "mobx-react";
+import { useStores } from "../../Stores/MainStore";
 
-export default function AllUsers(props) {
+const AllUsers = observer((props) => {
+
+    const { RequestStore, ConfigStore } = useStores();
 
     const myBusiness = props.myData.business_name;
     const [allUsers, setAllUsers] = useState([]);
@@ -12,28 +15,16 @@ export default function AllUsers(props) {
                 resolve();
             })
             .then(() => {
-                getMyVisitors();
+                return RequestStore.doGet(ConfigStore._url + "/users")
+            })
+            .then((res) => {
+                setAllUsers(res.filter(item => item.business_name === myBusiness));
             })
         } else {
             return;
         }
         
-    },[myBusiness]);
-
-    function getMyVisitors() {
-        fetch(_url + "/users", {
-        method: 'GET',
-        headers: {
-            "Content-Type"                : "application/json",
-            "Access-Control-Allow-Origin" : "*",
-            "ngrok-skip-browser-warning"  : true
-          },
-        }).then((res) => {
-            return res.json();
-        }).then((res) => {
-            setAllUsers(res.filter(item => item.business_name === myBusiness));
-        })
-    }
+    },[myBusiness, RequestStore, ConfigStore]);
 
     return(
         <div className="features__allUsers">
@@ -46,4 +37,5 @@ export default function AllUsers(props) {
             }
         </div>
     );
-}
+});
+export default AllUsers;

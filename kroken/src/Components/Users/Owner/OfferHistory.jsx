@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { _url } from "../../Config";
+import React, { useEffect } from "react";
+import { observer } from "mobx-react";
+import { useStores } from "../../Stores/MainStore";
 import { Button } from "@mui/material";
+import Confirmation from "../../Partial/Confirmation/Confirmation";
 
-export default function OfferHistory(props) {
+const OfferHistory = observer((props) => {
+
+    const { RequestStore, ConfigStore } = useStores();
 
     const myBusinessN = props.myData.business_name;
-    const [oldOffers, setOldOffers] = useState([]);
 
     useEffect(() => {
         if(myBusinessN) {
@@ -13,54 +16,42 @@ export default function OfferHistory(props) {
                 resolve();
             })
             .then(() => {
-                getOldOffers();
-            })
-        } else {
-            return;
-        }
-    },[myBusinessN]);
-
-    function getOldOffers() {
-        fetch(_url + '/oldPosts/' + myBusinessN, {
-        method: 'GET',
-        headers: {
-            "Content-Type"                : "application/json",
-            "Access-Control-Allow-Origin" : "*",
-            "ngrok-skip-browser-warning"  : true
-        }
-        })
-        .then((res) => {
-            return res.json();
-        })
-        .then((res) => {
-            setOldOffers(res);
-        })
-    }
-
-    const returnPost = (e) => {
-        if (window.confirm("Do you want to return this offer?") === true) {
-            fetch(_url + '/returnPost', {
-                method: 'POST',
-                headers: {
-                    "Content-Type" : "application/json"
-                },
-                body: JSON.stringify({
-                    id: e.target.id,
-                })
+                return RequestStore.doGet(ConfigStore._url + "/oldPosts/" + myBusinessN)
             })
             .then((res) => {
-                console.log(res);
+                ConfigStore.setPostsHistory(res);
             })
         } else {
             return;
         }
+    },[myBusinessN, RequestStore, ConfigStore]);
+
+    const returnPost = (e) => {
+        new Promise((resolve, reject) => {
+            resolve();
+        })
+        .then(() => {
+            ConfigStore.setPostId(e.target.id);
+        })
+        .then(() => {
+            ConfigStore.setStateConfirmation("restore");
+        })
+        .then(() => {
+            ConfigStore.setHeaderConfirmation("Do you want to return this offer?");
+        })
+        .then(() => {
+            ConfigStore.setTextConfirmation("You can delete it at any time!");
+        })
+        .then(() => {
+            ConfigStore.setIsConfirmShow(true);
+        })
     }
 
     return(
         <div className="features__offers">
             <p className="offers__title">Here is your deleted offers</p>
-            {oldOffers ? 
-                oldOffers.map(post => 
+            {ConfigStore.postsHistory ? 
+                ConfigStore.postsHistory.slice().reverse().map(post => 
                 <div className="offers__card" key={post._id}>
                     <p>Condition: {post.condition}</p>
                     <p>Required bonuses: {post.required_bonuses}</p>
@@ -77,6 +68,9 @@ export default function OfferHistory(props) {
             :
                 <p>Sorry, any deleted offers</p>
             }
+            <Confirmation />
         </div>
     );
-}
+});
+
+export default OfferHistory;

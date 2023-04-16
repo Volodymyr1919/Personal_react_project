@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import { useForm } from "react-hook-form";
-import { _url } from "../../../Config";
 import { TextField, Button } from "@mui/material";
 import { observer } from "mobx-react";
 import { useStores } from "../../../Stores/MainStore";

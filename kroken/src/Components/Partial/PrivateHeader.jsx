@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { AppBar, Box, Menu, MenuItem, IconButton, Toolbar, Typography, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import Confirmation from './Confirmation/Confirmation';
+import { observer } from 'mobx-react';
+import { useStores } from '../Stores/MainStore';
 
-export default function PrivateHeader() {
+const PrivateHeader = observer(() => {
 
-    const navigate = useNavigate();
+    const { ConfigStore } = useStores();
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -19,14 +20,22 @@ export default function PrivateHeader() {
     };
 
     const logout = () => {
-        if(window.confirm("Are you sure, want to exit?")) {
-            handleCloseNavMenu();
-            localStorage.clear();
-            navigate("/signin");
-        } else {
-            return;
-        }
-    }
+        new Promise((resolve, reject) => {
+            resolve();
+        })
+        .then(() => {
+            ConfigStore.setStateConfirmation("logout");
+        })
+        .then(() => {
+            ConfigStore.setHeaderConfirmation("Are you sure, want to exit?");
+        })
+        .then(() => {
+            ConfigStore.setTextConfirmation("You can back at any time!");
+        })
+        .then(() => {
+            ConfigStore.setIsConfirmShow(true);
+        })
+    };
 
     return(
         <>
@@ -63,8 +72,6 @@ export default function PrivateHeader() {
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         <Button
-                            // component={NavLink}
-                            // to="/signin"
                             onClick={logout}
                             sx={{ color: '#fff' }}
                         >
@@ -81,7 +88,10 @@ export default function PrivateHeader() {
                         <MenuIcon />
                     </IconButton>
                 </Toolbar>
-            </AppBar>   
+            </AppBar>
+            <Confirmation /> 
         </>
     );
-}
+});
+
+export default PrivateHeader;

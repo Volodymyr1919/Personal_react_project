@@ -4,13 +4,17 @@ import AllUsers from "./AllUsers";
 import AllOffers from "./AllOffers";
 import OfferHistory from "./OfferHistory";
 import AliceCarousel from "react-alice-carousel";
-import { _url } from "../../Config";
+import { observer } from "mobx-react";
+import { useStores } from "../../Stores/MainStore";
 import { TextField, Button } from "@mui/material";
+import Snack from "../../Partial/Snack";
 import "react-alice-carousel/lib/alice-carousel.css";
 // eslint-disable-next-line no-unused-vars
 import owner from "./owner.scss";
 
-export default function Owner() {
+const Owner = observer(() => {
+
+    const { RequestStore, ConfigStore } = useStores();
 
     const [myData, setMyData] = useState("");
     const [condition, setCondition] = useState("");
@@ -18,58 +22,65 @@ export default function Owner() {
     const [gift, setGift] = useState("");
 
     useEffect(() => {
-        async function getMyData() {
-            await fetch(_url + '/me/' + localStorage.getItem("myAppId"), {
-                method: 'GET',
-                headers: {
-                    "Content-Type"                : "application/json",
-                    "Access-Control-Allow-Origin" : "*",
-                    "ngrok-skip-browser-warning"  : true
-                }
-            })
-            .then((res) => {
-                return res.json();
-            })
-            .then((res) => {
-                setMyData(res);
-            })
-        };
-        getMyData();
-    }, [])
+        new Promise((resolve, reject) => {
+            resolve();
+        })
+        .then(() => {
+            return RequestStore.doGet(ConfigStore._url + "/me/" + localStorage.getItem("myAppId"))
+        })
+        .then((res) => {
+            setMyData(res);
+            ConfigStore.setBusinessName(res.business_name);
+        })
+    }, [RequestStore, ConfigStore])
 
     const {
         register,
         handleSubmit,
+        resetField,
         formState: { errors },
-      } = useForm({
+    } = useForm({
         mode: "onChange",
-      });
-      const onSubmit = (data) => {
-        const requestOptions = {
-          method: "POST",
-          headers: {
-            "Content-Type"      : "application/json"
-          },
-          body: JSON.stringify({
-            business_name       : myData.business_name,
-            condition           : data.condition,
-            required_bonuses    : data.requiredBonuses,
-            gift                : data.gift
-          }),
-        };
-        fetch(_url + "/offer", requestOptions)
-        .then((res) => {
-            console.log(res);
+    });
+    const onSubmit = (data) => {
+        new Promise((resolve, reject) => {
+            resolve();
         })
-      };
+        .then(() => {
+            return RequestStore.doPost(ConfigStore._url + "/offer", {
+                business_name       : myData.business_name,
+                condition           : data.condition,
+                required_bonuses    : data.requiredBonuses,
+                gift                : data.gift
+            })
+        })
+        .then((res) => {
+            if(res.acknowledged) {
+                resetField("condition");
+                resetField("requiredBonuses");
+                resetField("gift");
+                ConfigStore.setSeverity("success");
+                ConfigStore.setTextAlert("Success!");
+                RequestStore.doGet(ConfigStore._url + "/posts/" + ConfigStore.businessName)
+                .then((res) => {
+                    ConfigStore.setPosts(res);
+                });
+                ConfigStore.setIsSnackShow(true);
+            } else {
+                ConfigStore.setSeverity("error");
+                ConfigStore.setTextAlert("Offer already existing!");
+                ConfigStore.setIsSnackShow(true);
+            }
+        })
+    };
       
     return(
         <div className="page__owner">
             <div className="owner__about">
                 <AliceCarousel disableButtonsControls='true' touchTracking='true' touchMoveDefaultEvents='false'>
                     <div className="about__info">
-                        <p>Name: {myData.name}</p>
-                        <p>{myData.type_business}: {myData.business_name}</p>
+                        <p>Name: {myData.name ? ((myData.name).replace(/_/g," ")) : myData.name}</p>
+                        <p>{myData.type_business}: {myData.business_name ? ((myData.business_name).replace(/_/g," ")) : myData.business_name}</p>
                     </div>
                     <div className="about__newOffer">
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -131,13 +142,16 @@ export default function Owner() {
                 </AliceCarousel>
                 <div className="about__features">
                     <AliceCarousel disableButtonsControls='true'>
-                        <AllUsers myData={myData} />
                         <AllOffers myData={myData} />
+                        <AllUsers myData={myData} />
                         <OfferHistory myData={myData} />
                     </AliceCarousel>
                 </div>
             </div>
             <div className="page__bg"></div>
+            <Snack />
         </div>
     );
-}
+});
+
+export default Owner;

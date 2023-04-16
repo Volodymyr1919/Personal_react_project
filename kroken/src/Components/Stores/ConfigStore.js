@@ -5,6 +5,18 @@ export default class ConfigStore {
     _url = "http://localhost:3001";
     isShow = false;
     isInfoAlertShow = false;
+    isConfirmShow = false;
+    isSnackShow = false;
+    isAboutShow = false;
+    isFeedbackShow = false;
+    scroll = "paper";
+    businessName = "";
+    hederConfirmation = "";
+    textConfirmation = "";
+    stateConfirmation = "";
+    posts = [];
+    postsHistory = [];
+    postId = "";
     textAlert = "";
     severity = "";
     err = "";
@@ -28,7 +40,55 @@ export default class ConfigStore {
 
     setSeverity(sev) {
         this.severity = sev;
-    }
+    };
+
+    setIsConfirmShow(confirm) {
+        this.isConfirmShow = confirm;
+    };
+
+    setHeaderConfirmation(header) {
+        this.hederConfirmation = header;
+    };
+
+    setTextConfirmation(text) {
+        this.textConfirmation = text;
+    };
+
+    setStateConfirmation(state) {
+        this.stateConfirmation = state;
+    };
+
+    setPosts(posts) {
+        this.posts = posts;
+    };
+
+    setPostsHistory(posts) {
+        this.postsHistory = posts;
+    };
+
+    setPostId(id) {
+        this.postId = id;
+    };
+
+    setIsSnackShow(snack) {
+        this.isSnackShow = snack;
+    };
+
+    setBusinessName(businessName) {
+        this.businessName = businessName;
+    };
+
+    setIsAboutShow(about) {
+        this.isAboutShow = about;
+    };
+
+    setScroll(scroll) {
+        this.scroll = scroll;
+    };
+
+    setIsFeedbackShow(feedback) {
+        this.isFeedbackShow = feedback;
+    };
 
     setErr(err) {
         this.err = err;
