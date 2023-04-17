@@ -19,6 +19,11 @@ const PrivateHeader = observer(() => {
         setAnchorElNav(null);
     };
 
+    const openFeed = () => {
+        handleCloseNavMenu();
+        ConfigStore.setIsFeedbackShow(true);
+    };
+
     const logout = () => {
         new Promise((resolve, reject) => {
             resolve();
@@ -59,6 +64,9 @@ const PrivateHeader = observer(() => {
                             display: { xs: "block", md: "none" },
                         }}
                         >
+                        <MenuItem onClick={openFeed} >
+                            <Typography textAlign="center">Feedback</Typography>
+                        </MenuItem>
                         <MenuItem onClick={logout} >
                             <Typography textAlign="center">Logout</Typography>
                         </MenuItem>
@@ -71,6 +79,12 @@ const PrivateHeader = observer(() => {
                         <span>KROKEN</span>
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                        <Button
+                            onClick={openFeed}
+                            sx={{ color: '#fff' }}
+                        >
+                            Feedback
+                        </Button>
                         <Button
                             onClick={logout}
                             sx={{ color: '#fff' }}

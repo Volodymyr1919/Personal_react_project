@@ -3,10 +3,14 @@ import { AppBar, Box, Menu, MenuItem, IconButton, Toolbar, Typography, Button } 
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { observer } from 'mobx-react';
+import { useStores } from '../Stores/MainStore';
 
-export default function Header() {
+const Header = observer(() => {
 
     const navigate = useNavigate();
+
+    const { ConfigStore } = useStores();
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -16,6 +20,11 @@ export default function Header() {
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
+    };
+
+    const openFeed = () => {
+        handleCloseNavMenu();
+        ConfigStore.setIsFeedbackShow(true);
     };
 
     return(
@@ -53,6 +62,9 @@ export default function Header() {
                     >
                         <Typography textAlign="center">Signup</Typography>
                     </MenuItem>
+                    <MenuItem onClick={openFeed}>
+                        <Typography textAlign="center">Feedback</Typography>
+                    </MenuItem>
                 </Menu>
                 <Typography
                     variant="h6"
@@ -80,4 +92,6 @@ export default function Header() {
             </Toolbar>
         </AppBar>
     );
-}
+});
+
+export default Header;

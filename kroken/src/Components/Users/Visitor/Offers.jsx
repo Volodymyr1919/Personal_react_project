@@ -29,7 +29,7 @@ const Offers = observer((props) => {
     return(
         <div className="about__offers">
             {posts ? 
-                posts.map(post => 
+                posts.slice().reverse().map(post => 
                     <div className="offers__one" key={post._id}>
                         <p>Condition: {post.condition}</p>
                         <p>Required bonuses: {myData.bonus}/{post.required_bonuses}</p>

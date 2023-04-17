@@ -28,6 +28,7 @@ const Feedback = observer(() => {
     const {
         register,
         handleSubmit,
+        resetField,
         formState: { errors },
     } = useForm({
         mode: "onChange",
@@ -37,10 +38,24 @@ const Feedback = observer(() => {
             resolve();
         })
         .then(() => {
-            return RequestStore.doPost(ConfigStore._url + "/offer")
+            return RequestStore.doPost(
+            `https://api.telegram.org/bot5608047519:AAHRTO7QJAhPiuBYie51fBY_xK0aTagXkVY/sendMessage?chat_id=-896958424&text=${JSON.stringify(data)}`)
         })
         .then((res) => {
-            
+            if (res.ok) {
+                resetField("connection");
+                resetField("topic");
+                resetField("message");
+                ConfigStore.setIsFeedbackShow(false);
+                ConfigStore.setSeverity("success");
+                ConfigStore.setTextAlert("Success!");
+                ConfigStore.setIsSnackShow(true);
+            } else {
+                ConfigStore.setIsFeedbackShow(false);
+                ConfigStore.setSeverity("error");
+                ConfigStore.setTextAlert("Some error occured :(");
+                ConfigStore.setIsSnackShow(true);
+            }
         })
     };
 
@@ -68,7 +83,7 @@ const Feedback = observer(() => {
                                 variant="standard" 
                                 type="text"
                                 fullWidth
-                                {...register("condition", {
+                                {...register("connection", {
                                     required: 'Field is required',
                                     minLength: {
                                         value: 2,
@@ -80,14 +95,14 @@ const Feedback = observer(() => {
                                     }
                                 })}
                             />
-                            <p className="errorMessage">{errors.condition && errors.condition.message}</p>
+                            <p className="errorMessage">{errors.connection && errors.connection.message}</p>
                             <TextField
                                 id="standard-basic"
                                 label="Topic of your feedback"
                                 variant="standard"
                                 type="text"
                                 fullWidth
-                                {...register("requiredBonuses", {
+                                {...register("topic", {
                                     required: 'Field is required',
                                     minLength: {
                                         value: 2,
@@ -99,14 +114,14 @@ const Feedback = observer(() => {
                                     }
                                 })}
                             />
-                            <p className="errorMessage">{errors.requiredBonuses && errors.requiredBonuses.message}</p>
+                            <p className="errorMessage">{errors.topic && errors.topic.message}</p>
                             <TextField
                                 id="standard-basic"
-                                label="Feedback"
+                                label="Message"
                                 variant="standard"
                                 type="text"
                                 fullWidth
-                                {...register("gift", {
+                                {...register("message", {
                                     required: 'Field if required',
                                     minLength: {
                                         value: 2,
@@ -118,7 +133,7 @@ const Feedback = observer(() => {
                                     }
                                 })}
                             />
-                            <p className="errorMessage">{errors.gift && errors.gift.message}</p>
+                            <p className="errorMessage">{errors.message && errors.message.message}</p>
                         </div>
                         <Button type="submit" variant="outlined">Send</Button>
                     </form>

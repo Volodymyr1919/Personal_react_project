@@ -1,12 +1,98 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+
 html,
 body{
     margin: 0;
     padding: 0;
     width: 100%;
+    height: 100%;
     box-sizing: border-box;
+}
+
+body{
+    height: calc(100% - 64px);
+    margin-top: 64px;
+    font-family: "Raleway", sans-serif;
+    div#root{
+        height: 100%;
+        footer{
+            width: 100%;
+            height: 60px;
+            background: #4C0013;
+            position: fixed;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 200;
+            font-family: 'Montserrat', sans-serif;
+            color: rgb(196, 196, 196);
+            p{
+                padding: 0;
+                margin: 0;
+            }
+            p.footer__me{
+                font-family: 'Petit Formal Script', cursive;
+            }
+        }
+    }
     span.mouseOver{
         &:hover{
             cursor: pointer;
+        }
+    }
+}
+@media (max-width: 768px) {
+    nav.MuiPaper-root{
+        height: 60px;
+    }
+    body{
+        height: calc(100% - 56px);
+        margin-top: 56px;
+        div#root{
+            height: 100%;
+            div.home{
+                div.home__about{
+                    width: 80%;
+                }
+            }
+            footer{
+                padding: 0 8px;
+                button{
+                    display: none;
+                }
+                p{
+                    font-size: 12px;
+                    width: fit-content;
+                }
+            }
+            div.signup{
+                form{
+                    .loginSignUp{
+                        padding: 10px 30px;
+                    }
+                }
+            }
+            div.page__visitor{
+                div.visitor__about{
+                    div.about__info{
+                        height: 200px;
+                    }
+                    div.about__offers{
+                        height: calc(100% - 200px);
+                    }
+                }
+            }
+            div.NFPage,
+            div.personalPage__bonus{
+                height: 110%;
+                margin-top: -56px;
+            }
+        }
+        div.MuiModal-root{
+            div.MuiBox-root{
+                width: 100%;
+            }
         }
     }
 }

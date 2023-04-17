@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Offers from "./Offers";
 import { observer } from "mobx-react";
 import { useStores } from "../../Stores/MainStore";
+import Feedback from "../../Partial/Feedback/Feedback";
 // eslint-disable-next-line no-unused-vars
 import visitor from "./visitor.scss";
 
@@ -34,6 +35,7 @@ const Visitor = observer(() => {
                 <Offers myData={myData} />
             </div>
             <div className="page__bg"></div>
+            <Feedback />
         </div>
     );
 });

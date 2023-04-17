@@ -6,6 +6,7 @@ import { useStores } from "../../Stores/MainStore";
 import ErrorModal from "../../Partial/ErrorModal";
 import { typeList } from "../../TypeList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Feedback from "../../Partial/Feedback/Feedback";
 import "bootstrap/dist/css/bootstrap.css";
 // eslint-disable-next-line no-unused-vars
 import signUp from "./signUp.scss"
@@ -58,6 +59,7 @@ const SignUp = observer(() => {
     return(
         <div className="signup">
           <ErrorModal />
+          <Feedback />
           <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="container">
                     <div className="screen">

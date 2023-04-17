@@ -29,7 +29,7 @@ const AllUsers = observer((props) => {
     return(
         <div className="features__allUsers">
             <p className="allUsers__title">Here is all your visitors</p>
-            {allUsers ? allUsers.map(user => 
+            {allUsers ? allUsers.slice().reverse().map(user => 
                 <p className="allUsers__user" key={user._id}>Visitor: {user.name}; Bonus: {user.bonus}</p>
             )
             :
