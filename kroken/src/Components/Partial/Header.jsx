@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useStores } from '../Stores/MainStore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 
 const Header = observer(() => {
 
@@ -13,13 +15,22 @@ const Header = observer(() => {
     const { ConfigStore } = useStores();
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [anchorElGlobe, setAnchorElGlobe] = React.useState(null);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
 
+    const handleOpenGlobeMenu = (event) => {
+        setAnchorElGlobe(event.currentTarget);
+    };
+
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
+    };
+
+    const handleCloseGlobeMenu = () => {
+        setAnchorElGlobe(null);
     };
 
     const openFeed = () => {
@@ -66,6 +77,28 @@ const Header = observer(() => {
                         <Typography textAlign="center">Feedback</Typography>
                     </MenuItem>
                 </Menu>
+                <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorElGlobe}
+                    anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "left",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                        vertical: "top",
+                        horizontal: "left",
+                    }}
+                    open={Boolean(anchorElGlobe)}
+                    onClose={handleCloseGlobeMenu}
+                    >
+                    <MenuItem>
+                        <Typography textAlign="center">EN</Typography>
+                    </MenuItem>
+                    <MenuItem>
+                        <Typography textAlign="center">DE</Typography>
+                    </MenuItem>
+                </Menu>
                 <Typography
                     variant="h6"
                     component="div"
@@ -76,6 +109,7 @@ const Header = observer(() => {
                         onClick={() => navigate("/")}
                     >KROKEN</span>
                 </Typography>
+                <Button sx={{ color: '#fff' }} onClick={handleOpenGlobeMenu}><FontAwesomeIcon icon={faGlobe}/></Button>
                 <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                     <Button component={NavLink} to="/signin" sx={{ color: '#fff' }}>Signin</Button>
                     <Button component={NavLink} to="/signup" sx={{ color: '#fff' }}>Signup</Button>
