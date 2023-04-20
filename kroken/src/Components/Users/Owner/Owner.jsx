@@ -76,86 +76,88 @@ const Owner = observer(() => {
     };
       
     return(
-        <div className="page__owner">
-            <div className="owner__about">
-                <AliceCarousel disableButtonsControls='true' touchTracking='true' touchMoveDefaultEvents='false'>
-                    <div className="about__newOffer">
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className="newOffer__form">
-                                <span className="form__title">Send new offer:</span>
-                                <TextField
-                                    id="standard-basic"
-                                    label="Condition"
-                                    variant="standard" 
-                                    type="text"
-                                    fullWidth
-                                    {...register("condition", {
-                                        required: 'Field is required',
-                                        minLength: {
-                                            value: 2,
-                                            message: "Minimum 2 symbols"
-                                        },
-                                        value: condition,
-                                        onChange: (e) => {
-                                            setCondition(e.target.value)
-                                        }
-                                    })}
-                                />
-                                <p className="errorMessage">{errors.condition && errors.condition.message}</p>
-                                <TextField
-                                    id="standard-basic"
-                                    label="Required bonuses"
-                                    variant="standard"
-                                    type="number"
-                                    fullWidth
-                                    {...register("requiredBonuses", {
-                                        required: 'Field is required',
-                                        value: requiredBonuses,
-                                        onChange: (e) => {
-                                            setRequiredBonuses(e.target.value)
-                                        }
-                                    })}
-                                />
-                                <p className="errorMessage">{errors.requiredBonuses && errors.requiredBonuses.message}</p>
-                                <TextField
-                                    id="standard-basic"
-                                    label="Gift"
-                                    variant="standard"
-                                    type="text"
-                                    fullWidth
-                                    {...register("gift", {
-                                        required: 'Field if required',
-                                        value: gift,
-                                        onChange: (e) => {
-                                            setGift(e.target.value)
-                                        }
-                                    })}
-                                />
-                                <p className="errorMessage">{errors.gift && errors.gift.message}</p>
-                            </div>
-                            <Button type="submit" variant="outlined">Send</Button>
-                        </form>
-                    </div>
-                    <div className="about__info">
-                        <p>Name: {myData.name ? ((myData.name).replace(/_/g," ")) : myData.name}</p>
-                        <p>{myData.type_business}: {myData.business_name ? ((myData.business_name).replace(/_/g," ")) : myData.business_name}</p>
-                    </div>
-                </AliceCarousel>
-                <AllOffers myData={myData} />
-                <AllUsers myData={myData} />
-                <OfferHistory myData={myData} />
-                <div className="about__features">
-                    <AliceCarousel disableButtonsControls='true'>
-                        <AllOffers myData={myData} />
-                        <AllUsers myData={myData} />
-                        <OfferHistory myData={myData} />
+        <>
+            <div className="page__owner">
+                <div className="owner__about">
+                    <AliceCarousel disableButtonsControls='true' touchTracking='true' touchMoveDefaultEvents='false'>
+                        <div className="about__newOffer">
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <div className="newOffer__form">
+                                    <span className="form__title">Send new offer:</span>
+                                    <TextField
+                                        id="standard-basic"
+                                        label="Condition"
+                                        variant="standard" 
+                                        type="text"
+                                        fullWidth
+                                        {...register("condition", {
+                                            required: 'Field is required',
+                                            minLength: {
+                                                value: 2,
+                                                message: "Minimum 2 symbols"
+                                            },
+                                            value: condition,
+                                            onChange: (e) => {
+                                                setCondition(e.target.value)
+                                            }
+                                        })}
+                                    />
+                                    <p className="errorMessage">{errors.condition && errors.condition.message}</p>
+                                    <TextField
+                                        id="standard-basic"
+                                        label="Required bonuses"
+                                        variant="standard"
+                                        type="number"
+                                        fullWidth
+                                        {...register("requiredBonuses", {
+                                            required: 'Field is required',
+                                            value: requiredBonuses,
+                                            onChange: (e) => {
+                                                setRequiredBonuses(e.target.value)
+                                            }
+                                        })}
+                                    />
+                                    <p className="errorMessage">{errors.requiredBonuses && errors.requiredBonuses.message}</p>
+                                    <TextField
+                                        id="standard-basic"
+                                        label="Gift"
+                                        variant="standard"
+                                        type="text"
+                                        fullWidth
+                                        {...register("gift", {
+                                            required: 'Field if required',
+                                            value: gift,
+                                            onChange: (e) => {
+                                                setGift(e.target.value)
+                                            }
+                                        })}
+                                    />
+                                    <p className="errorMessage">{errors.gift && errors.gift.message}</p>
+                                </div>
+                                <Button type="submit" variant="outlined">Send</Button>
+                            </form>
+                        </div>
+                        <div className="about__info">
+                            <p>Name: {myData.name ? ((myData.name).replace(/_/g," ")) : myData.name}</p>
+                            <p>{myData.type_business}: {myData.business_name ? ((myData.business_name).replace(/_/g," ")) : myData.business_name}</p>
+                        </div>
                     </AliceCarousel>
+                    <AllOffers myData={myData} />
+                    <AllUsers myData={myData} />
+                    <OfferHistory myData={myData} />
+                    <div className="about__features">
+                        <AliceCarousel disableButtonsControls='true'>
+                            <AllOffers myData={myData} />
+                            <AllUsers myData={myData} />
+                            <OfferHistory myData={myData} />
+                        </AliceCarousel>
+                    </div>
                 </div>
+                <div className="page__bg"></div>
             </div>
-            <div className="page__bg"></div>
             <Snack />
             <Feedback />
-        </div>
+        </>
     );
 });
 

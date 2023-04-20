@@ -48,7 +48,7 @@ const OfferHistory = observer((props) => {
     }
 
     return(
-        <div className="features__offers history">
+        <div className="features__history">
             <p className="offers__title">Here is your deleted offers</p>
             {ConfigStore.postsHistory ? 
                 ConfigStore.postsHistory.slice().reverse().map(post => 

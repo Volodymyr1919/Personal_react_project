@@ -11,7 +11,6 @@ div.page__owner{
     display: flex;
     box-sizing: border-box;
     overflow: hidden;
-
     div.owner__about{
         z-index: 200;
         height: 100%;
@@ -19,13 +18,12 @@ div.page__owner{
         box-sizing: border-box;
         padding: 20px;
         display: grid;
-        grid-template-columns: 300px 300px 300px;
-        grid-template-rows: repeat(2, 1fr);
         gap: 15px;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
         grid-template-areas: 
-            "offers" "carousel" "history"
-            "offers" "users" "history"
-        ;
+            "offers carousel history"
+            "offers users history";
         div.alice-carousel{
             grid-area: carousel;
             width: 300px;
@@ -37,10 +35,13 @@ div.page__owner{
             padding: 0 10px;
             border-radius: 8px;
             div{
+                height: 100%;
                 div.alice-carousel__wrapper{
+                    height: 100%;
                     ul.alice-carousel__stage{
+                        height: 100%;
                         li.alice-carousel__stage-item{
-                            height: 400px;
+                            height: 100%;
                             div.about__info{
                                 display: flex;
                                 align-items: center;
@@ -165,14 +166,20 @@ div.page__owner{
                 border-radius: 10px;
             }
         }
-        div.features__offers{
+        .features__history{
+            grid-area: history;
+        }
+        .features__offers{
             grid-area: offers;
+        }
+        div.features__history,
+        div.features__offers{
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 10px;
             height: 100%;
-            width: 1fr;
+            width: 100%;
             overflow-y: scroll;
             p{
                 font-family: 'Barlow', sans-serif;
@@ -184,6 +191,7 @@ div.page__owner{
                 width: 100%;
             }
             div.offers__card{
+                width: 100%;
                 display: flex;
                 flex-direction: column;
                 align-items: flex-end;
@@ -200,9 +208,6 @@ div.page__owner{
                     justify-content: center;
                 }
             }
-        }
-        div.history{
-            grid-area: history;
         }
         div.about__features{
             display: none;

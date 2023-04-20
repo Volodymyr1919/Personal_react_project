@@ -42,6 +42,100 @@ body{
         }
     }
 }
+@media (max-width: 1024px) {
+    body{
+        div#root{
+            div.page__owner{
+                div.owner__about{
+                    display: flex;
+                    flex-direction: column;
+                    div.features__history,
+                    div.features__allUsers,
+                    div.features__offers{
+                        display: none;
+                    }
+                    div.alice-carousel{
+                        height: 290px;
+                        margin-top: 0;
+                        margin-bottom: 0px;
+                        div{
+                            div.alice-carousel__wrapper{
+                                ul.alice-carousel__stage{
+                                    li.alice-carousel__stage-item{
+                                        div.about__info{
+                                            p{
+                                                font-size: 13px;
+                                            }
+                                        }
+                                        div.about__newOffer{
+                                            form{
+                                                div.newOffer__form{
+                                                    span.form__title{
+                                                        font-size: 13px;
+                                                    }
+                                                    div.MuiFormControl-root{
+                                                        height: 40px;
+                                                        label.MuiFormLabel-root{
+                                                            font-size: 13px;
+                                                        }
+                                                        input.MuiInputBase-input{
+                                                            height: 14px;
+                                                        }
+                                                    }
+                                                    .errorMessage{
+                                                        height: 5px;
+                                                    }
+                                                }
+                                                button{
+                                                    padding: 3px 14px;
+                                                    font-size: 0.775rem;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    div.about__features{
+                        display: block;
+                        height: calc(100% - 305px);
+                        div.alice-carousel{
+                            height: 100%;
+                            div{
+                                div.alice-carousel__wrapper{
+                                    ul{
+                                        li{
+                                            div.features__history,
+                                            div.features__allUsers,
+                                            div.features__offers{
+                                                display: block;
+                                            }
+                                            div.features__offers,
+                                            div.features__history{
+                                                div.offers__card{
+                                                    padding: 7px;
+                                                    height: 112px;
+                                                    p{
+                                                        font-size: 13px;
+                                                        height: 22px;
+                                                    }
+                                                    button{
+                                                        padding: 3px 13px;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 @media (max-width: 768px) {
     nav.MuiPaper-root{
         height: 60px;
