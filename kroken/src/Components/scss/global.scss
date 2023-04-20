@@ -36,6 +36,9 @@ body{
             }
         }
     }
+    span.info__type_business{
+        text-transform: capitalize;
+    }
     span.mouseOver{
         &:hover{
             cursor: pointer;

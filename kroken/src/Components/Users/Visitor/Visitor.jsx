@@ -29,7 +29,11 @@ const Visitor = observer(() => {
             <div className="visitor__about">
                 <div className="about__info">
                     <p>Username: {myData.name ? ((myData.name).replace(/_/g," ")) : myData.name}</p>
-                    <p>{myData.type_business}: {myData.business_name ? ((myData.business_name).replace(/_/g," ")) : myData.business_name}</p>
+                    <p>
+                        <span className="info__type_business">
+                            {myData.type_business ? ((myData.type_business).replace(/_/g," ")) : myData.type_business}
+                        </span>: {myData.business_name ? ((myData.business_name).replace(/_/g," ")) : myData.business_name}
+                    </p>
                     <p>Bonus: {myData.bonus}</p>
                 </div>
                 <Offers myData={myData} />
