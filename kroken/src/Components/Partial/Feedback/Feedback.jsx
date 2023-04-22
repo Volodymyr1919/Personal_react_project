@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import { useStores } from "../../Stores/MainStore";
 import { Box, Button, Typography, Modal, TextField } from '@mui/material';
 import { useForm } from "react-hook-form";
+import { language } from "../../lang";
 // eslint-disable-next-line
 import feedback from "./feedback.scss";
 
@@ -24,6 +25,7 @@ const Feedback = observer(() => {
     const [connection, setConnection] = React.useState("");
     const [topic, setTopic] = React.useState("");
     const [message, setMessage] = React.useState("");
+    const [lng, setLng] = React.useState(ConfigStore.lang);
 
     const {
         register,
@@ -48,12 +50,12 @@ const Feedback = observer(() => {
                 resetField("message");
                 ConfigStore.setIsFeedbackShow(false);
                 ConfigStore.setSeverity("success");
-                ConfigStore.setTextAlert("Success!");
+                ConfigStore.setTextAlert(lng === "de" ? "Erfolg!" : "Success!");
                 ConfigStore.setIsSnackShow(true);
             } else {
                 ConfigStore.setIsFeedbackShow(false);
                 ConfigStore.setSeverity("error");
-                ConfigStore.setTextAlert("Some error occured :(");
+                ConfigStore.setTextAlert(lng === "de" ? "Ein Fehler ist aufgetreten :(" : "Some error occured :(");
                 ConfigStore.setIsSnackShow(true);
             }
         })
@@ -62,6 +64,10 @@ const Feedback = observer(() => {
     const handleClose = () => {
         ConfigStore.setIsFeedbackShow(false);
     };
+
+    React.useEffect(() => {
+        setLng(ConfigStore.lang);
+    }, [ConfigStore.lang]);
 
     return(
         <Modal
@@ -72,22 +78,22 @@ const Feedback = observer(() => {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Fill up the form
+                    {lng === "de" ? language.fillUpForm.de : language.fillUpForm.en}
                 </Typography>
                 <Box>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="feedback__form">
                             <TextField
                                 id="standard-basic"
-                                label="How to connect with you"
+                                label={lng === "de" ? language.connect.de : language.connect.en}
                                 variant="standard" 
                                 type="text"
                                 fullWidth
                                 {...register("connection", {
-                                    required: 'Field is required',
+                                    required: `${lng === "de" ? language.required.de : language.required.en}`,
                                     minLength: {
                                         value: 2,
-                                        message: "Minimum 2 symbols"
+                                        message: `${lng === "de" ? language.min2symb.de : language.min2symb.en}`
                                     },
                                     value: connection,
                                     onChange: (e) => {
@@ -98,15 +104,15 @@ const Feedback = observer(() => {
                             <p className="errorMessage">{errors.connection && errors.connection.message}</p>
                             <TextField
                                 id="standard-basic"
-                                label="Topic of your feedback"
+                                label={lng === "de" ? language.topic.de : language.topic.en}
                                 variant="standard"
                                 type="text"
                                 fullWidth
                                 {...register("topic", {
-                                    required: 'Field is required',
+                                    required: `${lng === "de" ? language.required.de : language.required.en}`,
                                     minLength: {
                                         value: 2,
-                                        message: "Minimum 2 symbols"
+                                        message: `${lng === "de" ? language.min2symb.de : language.min2symb.en}`
                                     },
                                     value: topic,
                                     onChange: (e) => {
@@ -117,15 +123,15 @@ const Feedback = observer(() => {
                             <p className="errorMessage">{errors.topic && errors.topic.message}</p>
                             <TextField
                                 id="standard-basic"
-                                label="Message"
+                                label={lng === "de" ? language.message.de : language.message.en}
                                 variant="standard"
                                 type="text"
                                 fullWidth
                                 {...register("message", {
-                                    required: 'Field if required',
+                                    required: `${lng === "de" ? language.required.de : language.required.en}`,
                                     minLength: {
                                         value: 2,
-                                        message: "Minimum 2 symbols"
+                                        message: `${lng === "de" ? language.min2symb.de : language.min2symb.en}`
                                     },
                                     value: message,
                                     onChange: (e) => {
@@ -135,7 +141,9 @@ const Feedback = observer(() => {
                             />
                             <p className="errorMessage">{errors.message && errors.message.message}</p>
                         </div>
-                        <Button type="submit" variant="outlined">Send</Button>
+                        <Button type="submit" variant="outlined">
+                            {lng === "de" ? language.send.de : language.send.en}
+                        </Button>
                     </form>
                 </Box>
             </Box>

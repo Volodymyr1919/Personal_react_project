@@ -1,15 +1,17 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { TextField, Button } from "@mui/material";
 import { observer } from "mobx-react";
 import { useStores } from "../../../Stores/MainStore";
 import InfoAlert from "../../../Partial/InfoAlert";
+import { language } from "../../../lang";
 
 const Outcome = observer(() => {
 
   const { RequestStore, ConfigStore } = useStores();
 
   const [bonus, setBonus] = useState("");
+  const [lng, setLng] = useState(ConfigStore.lang);
 
     const {
         register,
@@ -41,17 +43,21 @@ const Outcome = observer(() => {
         })
       };
 
+      useEffect(() => {
+        setLng(ConfigStore.lang);
+      }, [ConfigStore.lang]);
+
     return(
       <div className="personalPage__bonus">
           <form onSubmit={handleSubmit(onSubmit)}>
               <TextField
                   id="standard-basic"
-                  label="Prise"
+                  label={lng === "de" ? language.prise.de : language.prise.en}
                   variant="standard"
                   type="number"
                   className="bonus__withdrow"
                   {...register("bonus", {
-                      required: 'Field is required',
+                      required: `${lng === "de" ? language.required.de : language.required.en}`,
                       value: bonus,
                       onChange: (e) => {
                           setBonus(e.target.value)
@@ -59,7 +65,9 @@ const Outcome = observer(() => {
                   })}
               />
               <p className="errorMessage">{errors.bonus && errors.bonus.message}</p>
-              <Button variant="outlined" type="submit">Spend bonus</Button>
+              <Button variant="outlined" type="submit">
+                {lng === "de" ? language.conf.de : language.conf.en}
+              </Button>
           </form>
           <div className="personalPage__bg"></div>
           <InfoAlert />

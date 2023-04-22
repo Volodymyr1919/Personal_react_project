@@ -6,6 +6,7 @@ import { observer } from 'mobx-react';
 import { useStores } from '../Stores/MainStore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { language } from '../lang';
 
 const PrivateHeader = observer(() => {
 
@@ -13,6 +14,8 @@ const PrivateHeader = observer(() => {
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElGlobe, setAnchorElGlobe] = React.useState(null);
+
+    const [lng, setLng] = React.useState(ConfigStore.lang);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -53,6 +56,15 @@ const PrivateHeader = observer(() => {
         })
     };
 
+    const changeLang = (e) => {
+        handleCloseGlobeMenu();
+        ConfigStore.setLang(e.target.id);
+    };
+
+    React.useEffect(() => {
+        setLng(ConfigStore.lang);
+    }, [ConfigStore.lang]);
+
     return(
         <>
             <AppBar component="nav" style={{background: "#4C0013"}}>
@@ -76,10 +88,10 @@ const PrivateHeader = observer(() => {
                         }}
                         >
                         <MenuItem onClick={openFeed} >
-                            <Typography textAlign="center">Feedback</Typography>
+                            <Typography textAlign="center">{lng === "de" ? language.feedback.de : language.feedback.en}</Typography>
                         </MenuItem>
                         <MenuItem onClick={logout} >
-                            <Typography textAlign="center">Logout</Typography>
+                            <Typography textAlign="center">{lng === "de" ? language.logout.de : language.logout.en}</Typography>
                         </MenuItem>
                     </Menu>
                     <Menu
@@ -97,11 +109,11 @@ const PrivateHeader = observer(() => {
                         open={Boolean(anchorElGlobe)}
                         onClose={handleCloseGlobeMenu}
                         >
-                        <MenuItem>
-                            <Typography textAlign="center">EN</Typography>
+                        <MenuItem onClick={changeLang}>
+                            <Typography textAlign="center" id="en">EN</Typography>
                         </MenuItem>
-                        <MenuItem>
-                            <Typography textAlign="center">DE</Typography>
+                        <MenuItem onClick={changeLang}>
+                            <Typography textAlign="center" id="de">DE</Typography>
                         </MenuItem>
                     </Menu>
                     <Typography
@@ -117,13 +129,13 @@ const PrivateHeader = observer(() => {
                             onClick={openFeed}
                             sx={{ color: '#fff' }}
                         >
-                            Feedback
+                            {lng === "de" ? language.feedback.de : language.feedback.en}
                         </Button>
                         <Button
                             onClick={logout}
                             sx={{ color: '#fff' }}
                         >
-                            Logout
+                            {lng === "de" ? language.logout.de : language.logout.en}
                         </Button>
                     </Box>
                     <IconButton

@@ -75,17 +75,17 @@ const Header = observer(() => {
                         component={NavLink}
                         to="/signin"
                     >
-                        <Typography textAlign="center">Signin</Typography>
+                        <Typography textAlign="center">{lng === "de" ? language.signin.de : language.signin.en}</Typography>
                     </MenuItem>
                     <MenuItem
                         onClick={handleCloseNavMenu}
                         component={NavLink}
                         to="/signup"
                     >
-                        <Typography textAlign="center">Signup</Typography>
+                        <Typography textAlign="center">{lng === "de" ? language.signup.de : language.signup.en}</Typography>
                     </MenuItem>
                     <MenuItem onClick={openFeed}>
-                        <Typography textAlign="center">Feedback</Typography>
+                        <Typography textAlign="center">{lng === "de" ? language.feedback.de : language.feedback.en}</Typography>
                     </MenuItem>
                 </Menu>
                 <Menu
@@ -122,8 +122,8 @@ const Header = observer(() => {
                 </Typography>
                 <Button sx={{ color: '#fff' }} onClick={handleOpenGlobeMenu}><FontAwesomeIcon icon={faGlobe}/></Button>
                 <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                    <Button component={NavLink} to="/signin" sx={{ color: '#fff' }}>{lng === "de" ? language[1].login : language[0].login}</Button>
-                    <Button component={NavLink} to="/signup" sx={{ color: '#fff' }}>Signup</Button>
+                    <Button component={NavLink} to="/signin" sx={{ color: '#fff' }}>{lng === "de" ? language.signin.de : language.signin.en}</Button>
+                    <Button component={NavLink} to="/signup" sx={{ color: '#fff' }}>{lng === "de" ? language.signup.de : language.signup.en}</Button>
                 </Box>
                 <IconButton
                     color="inherit"

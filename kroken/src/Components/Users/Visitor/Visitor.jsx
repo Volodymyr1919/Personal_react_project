@@ -3,6 +3,7 @@ import Offers from "./Offers";
 import { observer } from "mobx-react";
 import { useStores } from "../../Stores/MainStore";
 import Feedback from "../../Partial/Feedback/Feedback";
+import { language } from "../../lang";
 // eslint-disable-next-line no-unused-vars
 import visitor from "./visitor.scss";
 
@@ -11,6 +12,7 @@ const Visitor = observer(() => {
     const { RequestStore, ConfigStore } = useStores();
 
     const [myData, setMyData] = useState("");
+    const [lng, setLng] = useState(ConfigStore.lang);
 
     useEffect(() => {
         new Promise((resolve, reject) => {
@@ -22,13 +24,17 @@ const Visitor = observer(() => {
         .then((res) => {
             setMyData(res);
         })
-    }, [RequestStore, ConfigStore])
+    }, [RequestStore, ConfigStore]);
+
+    useEffect(() => {
+        setLng(ConfigStore.lang);
+    }, [ConfigStore.lang]);
 
     return(
         <div className="page__visitor">
             <div className="visitor__about">
                 <div className="about__info">
-                    <p>Username: {myData.name ? ((myData.name).replace(/_/g," ")) : myData.name}</p>
+                    <p>{lng === "de" ? language.username.de : language.username.en}: {myData.name ? ((myData.name).replace(/_/g," ")) : myData.name}</p>
                     <p>
                         <span className="info__type_business">
                             {myData.type_business ? ((myData.type_business).replace(/_/g," ")) : myData.type_business}

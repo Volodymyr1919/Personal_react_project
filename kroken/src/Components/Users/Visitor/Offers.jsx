@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react";
 import { useStores } from "../../Stores/MainStore";
+import { language } from "../../lang";
 
 const Offers = observer((props) => {
 
@@ -9,6 +10,7 @@ const Offers = observer((props) => {
     const { myData } = props;
 
     const [posts, setPosts] = useState("");
+    const [lng, setLng] = useState(ConfigStore.lang);
 
     useEffect(() => {
         if(myData) {
@@ -26,14 +28,18 @@ const Offers = observer((props) => {
         }
     }, [myData, RequestStore, ConfigStore, posts]);
 
+    useEffect(() => {
+        setLng(ConfigStore.lang);
+    }, [ConfigStore.lang]);
+
     return(
         <div className="about__offers">
             {posts ? 
                 posts.slice().reverse().map(post => 
                     <div className="offers__one" key={post._id}>
-                        <p>Condition: {post.condition}</p>
-                        <p>Required bonuses: {myData.bonus}/{post.required_bonuses}</p>
-                        <p>Gift: {post.gift}</p>
+                        <p>{lng === "de" ? language.cond.de : language.cond.en}: {post.condition}</p>
+                        <p>{lng === "de" ? language.required_bon.de : language.required_bon.en}: {myData.bonus}/{post.required_bonuses}</p>
+                        <p>{lng === "de" ? language.gift.de : language.gift.en}: {post.gift}</p>
                     </div>
                 )
                 :
