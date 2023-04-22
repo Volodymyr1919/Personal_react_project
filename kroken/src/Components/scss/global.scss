@@ -114,6 +114,14 @@ body{
                                             div.features__offers{
                                                 display: block;
                                             }
+                                            div.features__allUsers{
+                                                p.allUsers__user{
+                                                    height: 50px;
+                                                    &:not(:first-child) {
+                                                        margin-top: 8px;
+                                                    }
+                                                }
+                                            }
                                             div.features__offers,
                                             div.features__history{
                                                 div.offers__card{
@@ -125,6 +133,9 @@ body{
                                                     }
                                                     button{
                                                         padding: 3px 13px;
+                                                    }
+                                                    &:not(:first-child) {
+                                                        margin-top: 8px;
                                                     }
                                                 }
                                             }

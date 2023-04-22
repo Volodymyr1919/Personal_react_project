@@ -24,7 +24,7 @@ const AllOffers = observer((props) => {
         } else {
             return;
         }
-    },[myBusinessN, RequestStore, ConfigStore])
+    },[myBusinessN, RequestStore, ConfigStore]);
 
     const deletePost = (e) => {
         new Promise((resolve, reject) => {

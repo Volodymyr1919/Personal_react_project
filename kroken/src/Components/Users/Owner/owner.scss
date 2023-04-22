@@ -314,3 +314,8 @@ div.page__owner{
         z-index: 100;
     }
 }
+.MuiDialog-root{
+    .MuiBackdrop-root{
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+}

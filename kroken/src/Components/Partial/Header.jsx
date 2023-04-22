@@ -7,6 +7,7 @@ import { observer } from 'mobx-react';
 import { useStores } from '../Stores/MainStore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { language } from '../lang';
 
 const Header = observer(() => {
 
@@ -16,6 +17,7 @@ const Header = observer(() => {
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElGlobe, setAnchorElGlobe] = React.useState(null);
+    const [lng, setLng] = React.useState(ConfigStore.lang);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -37,6 +39,15 @@ const Header = observer(() => {
         handleCloseNavMenu();
         ConfigStore.setIsFeedbackShow(true);
     };
+
+    const changeLang = (e) => {
+        handleCloseGlobeMenu();
+        ConfigStore.setLang(e.target.id);
+    };
+
+    React.useEffect(() => {
+        setLng(ConfigStore.lang);
+    }, [ConfigStore.lang]);
 
     return(
         <AppBar component="nav" style={{background: "#4C0013"}}>
@@ -92,11 +103,11 @@ const Header = observer(() => {
                     open={Boolean(anchorElGlobe)}
                     onClose={handleCloseGlobeMenu}
                     >
-                    <MenuItem>
-                        <Typography textAlign="center">EN</Typography>
+                    <MenuItem onClick={changeLang}>
+                        <Typography textAlign="center" id="en">EN</Typography>
                     </MenuItem>
-                    <MenuItem>
-                        <Typography textAlign="center">DE</Typography>
+                    <MenuItem  onClick={changeLang}>
+                        <Typography textAlign="center" id="de">DE</Typography>
                     </MenuItem>
                 </Menu>
                 <Typography
@@ -111,7 +122,7 @@ const Header = observer(() => {
                 </Typography>
                 <Button sx={{ color: '#fff' }} onClick={handleOpenGlobeMenu}><FontAwesomeIcon icon={faGlobe}/></Button>
                 <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                    <Button component={NavLink} to="/signin" sx={{ color: '#fff' }}>Signin</Button>
+                    <Button component={NavLink} to="/signin" sx={{ color: '#fff' }}>{lng === "de" ? language[1].login : language[0].login}</Button>
                     <Button component={NavLink} to="/signup" sx={{ color: '#fff' }}>Signup</Button>
                 </Box>
                 <IconButton

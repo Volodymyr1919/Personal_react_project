@@ -39,16 +39,14 @@ const Confirmation = observer(() => {
                 .then((res) => {
                     if(res.acknowledged && (res.matchedCount === 1)) {
                         ConfigStore.setIsConfirmShow(false);
-                        ConfigStore.setSeverity("success");
-                        ConfigStore.setTextAlert("Success!");
-                        RequestStore.doGet(ConfigStore._url + "/posts/" + ConfigStore.businessName)
-                        .then((res) => {
-                            ConfigStore.setPosts(res);
-                        });
+                        ConfigStore.setPosts(ConfigStore.posts.filter((post) => post._id !== ConfigStore.postId));
+                        // ConfigStore.setPostsHistory(ConfigStore.postsHistory.push((post) => post._id !== ConfigStore.postId));
                         RequestStore.doGet(ConfigStore._url + "/oldPosts/" + ConfigStore.businessName)
                         .then((res) => {
                             ConfigStore.setPostsHistory(res);
                         });
+                        ConfigStore.setSeverity("success");
+                        ConfigStore.setTextAlert("Success!");
                         ConfigStore.setIsSnackShow(true);
                     } else {
                         ConfigStore.setIsConfirmShow(false);
@@ -70,16 +68,13 @@ const Confirmation = observer(() => {
                 .then((res) => {
                     if(res.acknowledged && (res.matchedCount === 1)) {
                         ConfigStore.setIsConfirmShow(false);
-                        ConfigStore.setSeverity("success");
-                        ConfigStore.setTextAlert("Success!");
-                        RequestStore.doGet(ConfigStore._url + "/oldPosts/" + ConfigStore.businessName)
-                        .then((res) => {
-                            ConfigStore.setPostsHistory(res);
-                        });
+                        ConfigStore.setPostsHistory(ConfigStore.postsHistory.filter((post) => post._id !== ConfigStore.postId));
                         RequestStore.doGet(ConfigStore._url + "/posts/" + ConfigStore.businessName)
                         .then((res) => {
                             ConfigStore.setPosts(res);
                         });
+                        ConfigStore.setSeverity("success");
+                        ConfigStore.setTextAlert("Success!");
                         ConfigStore.setIsSnackShow(true);
                     } else {
                         ConfigStore.setIsConfirmShow(false);

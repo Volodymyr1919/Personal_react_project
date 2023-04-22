@@ -9,6 +9,7 @@ export default class ConfigStore {
     isSnackShow = false;
     isAboutShow = false;
     isFeedbackShow = false;
+    lang = "de";
     scroll = "paper";
     businessName = "";
     hederConfirmation = "";
@@ -24,6 +25,10 @@ export default class ConfigStore {
     constructor(MainStore) {
         this.MainStore = MainStore;
         makeAutoObservable(this);
+    };
+
+    setLang(lang) {
+        this.lang = lang;
     };
 
     setIsShow(show) {

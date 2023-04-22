@@ -17,6 +17,10 @@ const Home = observer(() => {
         ConfigStore.setScroll(scrollType);
     };
 
+    React.useEffect(() => {
+        console.log(ConfigStore.lang);
+    }, [ConfigStore.lang])
+
     return(
         <>
             <div className='home'>

@@ -12,7 +12,7 @@ div.MuiDialog-container{
         }
         div.MuiDialogContent-root{
             background: rgba(0, 0, 0, 0.02);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(28px);
             padding: 0;
             height: 50px;
             display: flex;
@@ -20,6 +20,7 @@ div.MuiDialog-container{
             justify-content: center;
             p{
                 color: #aeaeae;
+                background: none;
             }
         }
         div.MuiDialogActions-root{

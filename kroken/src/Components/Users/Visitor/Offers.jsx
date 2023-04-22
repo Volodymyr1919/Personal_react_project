@@ -24,7 +24,7 @@ const Offers = observer((props) => {
         } else {
             return;
         }
-    }, [myData, RequestStore, ConfigStore]);
+    }, [myData, RequestStore, ConfigStore, posts]);
 
     return(
         <div className="about__offers">
