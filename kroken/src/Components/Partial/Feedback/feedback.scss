@@ -1,10 +1,10 @@
-
+@import "../../scss/colors.scss";
 
 div.MuiBox-root{
-    background: rgba(255, 255, 255, 0.01);
+    background: $fdbck_bg;
     backdrop-filter: blur(8px);
     h2{
-        color: rgb(255, 132, 0);
+        color: $fdbck_h;
     }
     div.MuiBox-root{
         background: transparent;
@@ -15,59 +15,59 @@ div.MuiBox-root{
                 box-sizing: border-box;
                 padding: 10px 0;
                 span.form__title{
-                    color: rgb(255, 132, 0);
+                    color: $fdbck_h;
                     line-height: 30px;
                 }
                 div.MuiFormControl-root{
                     background: transparent;
                     label.MuiFormLabel-root{
-                        color: #aeaeae;
+                        color: $sbm_txt;
                     }
                     label.Mui-focused{
-                        color: rgb(255, 132, 0);
+                        color: $fdbck_h;
                     }
                     div.MuiInputBase-root{
                         &::before{
-                            border-bottom: 1px solid #aeaeae;
+                            border-bottom: 1px solid $sbm_txt;
                         }
                         input.MuiInputBase-input{
-                            color: #aeaeae;
+                            color: $sbm_txt;
                             &:-webkit-autofill{
                                 transition: background-color 5000s;
-                                    -webkit-text-fill-color: #ffffff99 !important;
+                                    -webkit-text-fill-color: $icon_input !important;
                                 &:hover{
                                     transition: background-color 5000s;
-                                        -webkit-text-fill-color: #ffffff99 !important;
+                                        -webkit-text-fill-color: $icon_input !important;
                                 }
                                 &:focus{
                                     transition: background-color 5000s;
-                                        -webkit-text-fill-color: #ffffff99 !important;
+                                        -webkit-text-fill-color: $icon_input !important;
                                 }
                                 &:active{
                                     transition: background-color 5000s;
-                                        -webkit-text-fill-color: #ffffff99 !important;
+                                        -webkit-text-fill-color: $icon_input !important;
                                 }
                             }
                         }
                         &::after{
-                            border-bottom: 1px solid rgb(255, 132, 0);
+                            border-bottom: 1px solid $fdbck_h;
                         }
                     }
                 }
                 .errorMessage {
                     height: 15px;
                     font-size: 12px;
-                    color: rgb(191, 0, 0);
+                    color: $err_txt;
                     display: block;
                     font-weight: 700;
                 }
             }
             button{
-                border: 1px solid rgba(255, 132, 0, 0.436);
-                color: rgb(255, 132, 0);
+                border: 1px solid $fdbck_btn_bord;
+                color: $fdbck_h;
                 &:hover{
-                    background-color: rgba(210, 102, 25, 0.04);
-                    border: 1px solid rgb(255, 132, 0);
+                    background-color: $fdbck_btn_hov_bg;
+                    border: 1px solid $fdbck_h;
                 }
             }
                                 

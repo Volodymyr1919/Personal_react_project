@@ -46,10 +46,10 @@ const PrivateHeader = observer(() => {
             ConfigStore.setStateConfirmation("logout");
         })
         .then(() => {
-            ConfigStore.setHeaderConfirmation("Are you sure, want to exit?");
+            ConfigStore.setHeaderConfirmation(lng === "de" ? "Sind Sie sicher, dass Sie beenden möchten?" : "Are you sure, want to exit?");
         })
         .then(() => {
-            ConfigStore.setTextConfirmation("You can back at any time!");
+            ConfigStore.setTextConfirmation(lng === "de" ? "Sie können jederzeit zurückkehren!" : "You can back at any time!");
         })
         .then(() => {
             ConfigStore.setIsConfirmShow(true);

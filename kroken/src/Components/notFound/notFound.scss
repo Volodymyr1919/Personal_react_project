@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Josefin+Sans:wght@100&display=swap');
+@import "../scss/colors.scss";
+
 div.NFPage{
     width: 100%;
     height: 108%;
@@ -19,13 +21,13 @@ div.NFPage{
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: rgba(0, 0, 0, 0.02);
+        background: $blur_bg;
         backdrop-filter: blur(6px);
         p{
             span.text__number{
-                color: red;
+                color: $clear_red;
             }
-            color: #fff;
+            color: $clear_wht;
             font-size: 40px;
             &:first-child{
                 font-family: 'Bebas Neue', cursive;
@@ -45,7 +47,7 @@ div.NFPage{
         top: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 33, 0.654);
+        background: $main_bg;
         z-index: 100;
     }
 }

@@ -6,7 +6,7 @@
 div.home{
     height: calc(100% - 60px);
     width: 100%;
-    background: rgb(57, 50, 50);
+    background: $home_bg;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,11 +19,11 @@ div.home{
         width: 70%;
         height: fit-content;
         border-radius: 15px;
-        background: #36000eb4;
+        background: $bghome__about;
         box-sizing: border-box;
         padding: 20px;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-        color: rgb(190, 190, 190);
+        color: $about_txt;
         z-index: 200;
         display: flex;
         flex-direction: column;
@@ -33,10 +33,15 @@ div.home{
             font-family: 'Roboto Slab', serif;
             font-size: 1.35rem;
             font-weight: 600;
-            color: rgb(255, 132, 0);
+            color: $about_title;
         }
         p.about__users{
             font-family: 'Montserrat', sans-serif;
+        }
+        div.about__buttons{
+            .buttons__button{
+                color: $about_buttons;
+            }
         }
     }
     div.home__bg{
@@ -45,7 +50,7 @@ div.home{
         top: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 33, 0.654);
+        background: $main_bg;
         z-index: 100;
     }
 }

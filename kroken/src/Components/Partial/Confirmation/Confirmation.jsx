@@ -46,12 +46,12 @@ const Confirmation = observer(() => {
                             ConfigStore.setPostsHistory(res);
                         });
                         ConfigStore.setSeverity("success");
-                        ConfigStore.setTextAlert("Success!");
+                        ConfigStore.setTextAlert(ConfigStore.lang === "de" ? "Erfolg!" : "Success!");
                         ConfigStore.setIsSnackShow(true);
                     } else {
                         ConfigStore.setIsConfirmShow(false);
                         ConfigStore.setSeverity("error");
-                        ConfigStore.setTextAlert("Some error occured :(");
+                        ConfigStore.setTextAlert(ConfigStore.lang === "de" ? "Ein Fehler ist aufgetreten :(" : "Some error occured :(");
                         ConfigStore.setIsSnackShow(true);
                     }
                 })
@@ -74,17 +74,40 @@ const Confirmation = observer(() => {
                             ConfigStore.setPosts(res);
                         });
                         ConfigStore.setSeverity("success");
-                        ConfigStore.setTextAlert("Success!");
+                        ConfigStore.setTextAlert(ConfigStore.lang === "de" ? "Erfolg!" : "Success!");
                         ConfigStore.setIsSnackShow(true);
                     } else {
                         ConfigStore.setIsConfirmShow(false);
                         ConfigStore.setSeverity("error");
-                        ConfigStore.setTextAlert("Some error occured :(");
+                        ConfigStore.setTextAlert(ConfigStore.lang === "de" ? "Ein Fehler ist aufgetreten :(" : "Some error occured :(");
                         ConfigStore.setIsSnackShow(true);
                     }
                 })
                 break;
-
+            case "forever":
+                new Promise((resolve, reject) => {
+                    resolve();
+                })
+                .then(() => {
+                    return RequestStore.doDelete(ConfigStore._url + "/forever", {
+                        id: ConfigStore.postId
+                    })
+                })
+                .then((res) => {
+                    if(res.acknowledged && (res.matchedCount === 1)) {
+                        ConfigStore.setIsConfirmShow(false);
+                        ConfigStore.setPostsHistory(ConfigStore.postsHistory.filter((post) => post._id !== ConfigStore.postId));
+                        ConfigStore.setSeverity("success");
+                        ConfigStore.setTextAlert(ConfigStore.lang === "de" ? "Erfolg!" : "Success!");
+                        ConfigStore.setIsSnackShow(true);
+                    } else {
+                        ConfigStore.setIsConfirmShow(false);
+                        ConfigStore.setSeverity("error");
+                        ConfigStore.setTextAlert(ConfigStore.lang === "de" ? "Ein Fehler ist aufgetreten :(" : "Some error occured :(");
+                        ConfigStore.setIsSnackShow(true);
+                    }
+                })
+                break;
             default:
                 break;
         }
@@ -107,8 +130,8 @@ const Confirmation = observer(() => {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Disagree</Button>
-                <Button onClick={doThis}>Agree</Button>
+                <Button onClick={handleClose}>{ConfigStore.lang === "de" ? "Nein" : "No"}</Button>
+                <Button onClick={doThis}>{ConfigStore.lang === "de" ? "Ja" : "Yes"}</Button>
             </DialogActions>
         </Dialog>
     );

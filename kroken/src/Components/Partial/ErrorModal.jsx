@@ -20,7 +20,7 @@ const ErrorModal = observer(() => {
             }}
         >
             <Modal.Header closeButton>
-                <Modal.Title>Error</Modal.Title>
+                <Modal.Title>{ConfigStore.lang === "de" ? "Fehler" : "Error"}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {ConfigStore.err}

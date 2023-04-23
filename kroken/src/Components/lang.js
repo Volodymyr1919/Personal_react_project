@@ -179,4 +179,40 @@ export const language = {
         "de" : "Bestätigen",
         "en" : "Confirm"
     },
+    "sendNewOffer" : {
+        "de" : "Neues Angebot senden",
+        "en" : "Send new offer"
+    },
+    "allVis" : {
+        "de" : "Hier sind alle Ihre Besucher",
+        "en" : "Here is all your visitors"
+    },
+    "anyUser" : {
+        "de" : "Es tut uns leid, Sie haben immer noch keine Besucher registriert",
+        "en" : "Sorry you still have any visitor registered"
+    },
+    "allOffers" : {
+        "de" : "Hier sind alle Ihre Angebote",
+        "en" : "Here is all your offers"
+    },
+    "delete" : {
+        "de" : "löschen",
+        "en" : "delete"
+    },
+    "anyOffers" : {
+        "de" : "Es tut uns leid, es gibt immer noch keine Angebote",
+        "en" : "Sorry, still any offers"
+    },
+    "historyOffer" : {
+        "de" : "Hier sind Ihre gelöschten Angebote",
+        "en" : "Here is your deleted offers"
+    },
+    "return" : {
+        "de" : "Zurückgeben",
+        "en" : "return"
+    },
+    "anyHistory" : {
+        "de" : "Es tut uns leid, es gibt keine gelöschten Angebote",
+        "en" : "Sorry, any deleted offers"
+    }
 }

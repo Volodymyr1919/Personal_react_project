@@ -33,11 +33,11 @@ const Outcome = observer(() => {
         .then((res) => {
           if (res.status === 400) {
             ConfigStore.setSeverity("error");
-            ConfigStore.setTextAlert("Not enough bonuses");
+            ConfigStore.setTextAlert(lng === "de" ? "Nicht genügend Boni" : "Not enough bonuses");
             ConfigStore.setIsInfoAlertShow(true);
           } else {
             ConfigStore.setSeverity("success");
-            ConfigStore.setTextAlert("Successfuly");
+            ConfigStore.setTextAlert(lng === "de" ? "Erfolgreich" : "Successfully");
             ConfigStore.setIsInfoAlertShow(true);
           }
         })

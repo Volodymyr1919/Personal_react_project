@@ -9,7 +9,7 @@ export default class ConfigStore {
     isSnackShow = false;
     isAboutShow = false;
     isFeedbackShow = false;
-    lang = "de";
+    lang = window.navigator.language.slice(0, 2);
     scroll = "paper";
     businessName = "";
     hederConfirmation = "";

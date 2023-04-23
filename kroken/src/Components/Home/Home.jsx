@@ -39,11 +39,11 @@ const Home = observer(() => {
                         <br />
                         {lng === "de" ? language.about_s__own.de.about : language.about_s__own.en.about}
                     </p>
-                    <div>
-                        <Button onClick={handleClickOpen('paper')}>
+                    <div className='about__buttons'>
+                        <Button onClick={handleClickOpen('paper')} className='buttons__button'>
                             {lng === "de" ? language.learnMore.de : language.learnMore.en}
                         </Button>
-                        <Button component={NavLink} to="/signup">
+                        <Button component={NavLink} to="/signup" className='buttons__button'>
                             {lng === "de" ? language.getStarted.de : language.getStarted.en}
                         </Button>
                     </div>

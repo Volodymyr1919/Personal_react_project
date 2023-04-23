@@ -1,3 +1,5 @@
+@import "../../../scss/colors.scss";
+
 div.personalPage__bonus{
     width: 100%;
     height: 108%;
@@ -17,40 +19,40 @@ div.personalPage__bonus{
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: rgba(0, 0, 0, 0.02);
+        background: $blur_bg;
         backdrop-filter: blur(6px);
         div.MuiFormControl-root{
             label.MuiFormLabel-root{
-                color: #aeaeae;
+                color: $sbm_txt;
             }
             label.Mui-focused{
-                color: #fff;
+                color: $clear_wht;
             }
             div.MuiInputBase-root{
                 &::before{
-                    border-bottom: 1px solid #aeaeae;
+                    border-bottom: 1px solid $sbm_txt;
                 }
                 input.MuiInputBase-input{
-                    color: #aeaeae;
+                    color: $sbm_txt;
                 }
                 &::after{
-                    border-bottom: 1px solid #fff;
+                    border-bottom: 1px solid $clear_wht;
                 }
             }
         }
         .errorMessage {
 			height: 15px;
 			font-size: 12px;
-			color: rgb(191, 0, 0);
+			color: $err_txt;
 			display: block;
 			font-weight: 700;
 		}
         button{
-            border: 1px solid rgba(155, 155, 155, 0.5);
-            color: #e5e5e5;
+            border: 1px solid $bonus_btn_bor;
+            color: $bonus_btn_txt;
             &:hover{
-                background-color: rgba(25, 118, 210, 0.04);
-                border: 1px solid #ffffff;
+                background-color: $bonus_btn_bg_hov;
+                border: 1px solid $clear_wht;
             }
         }
     }
@@ -63,7 +65,7 @@ div.personalPage__bonus{
         top: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 33, 0.654);
+        background: $main_bg;
         z-index: 100;
     }
 }

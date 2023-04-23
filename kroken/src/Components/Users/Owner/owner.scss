@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
 @import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
+@import "../../scss/colors.scss";
 
 div.page__owner{
     width: 100%;
@@ -29,7 +30,7 @@ div.page__owner{
             width: 300px;
             height: 360px;
             position: relative;
-            background: rgba(0, 0, 0, 0.02);
+            background: $blur_bg;
             backdrop-filter: blur(8px);
             box-sizing: border-box;
             padding: 0 10px;
@@ -51,7 +52,7 @@ div.page__owner{
                                 height: 100%;
                                 p{
                                     font-family: 'Raleway', sans-serif;
-                                    color: rgb(255, 132, 0);
+                                    color: $fdbck_h;
                                     letter-spacing: 1.5px;
                                     width: 100%;
                                 }
@@ -64,58 +65,58 @@ div.page__owner{
                                         box-sizing: border-box;
                                         padding: 10px 0;
                                         span.form__title{
-                                            color: rgb(255, 132, 0);
+                                            color: $fdbck_h;
                                             line-height: 30px;
                                         }
                                         div.MuiFormControl-root{
                                             label.MuiFormLabel-root{
-                                                color: #aeaeae;
+                                                color: $sbm_txt
                                             }
                                             label.Mui-focused{
-                                                color: rgb(255, 132, 0);
+                                                color: $fdbck_h;
                                             }
                                             div.MuiInputBase-root{
                                                 &::before{
-                                                    border-bottom: 1px solid #aeaeae;
+                                                    border-bottom: 1px solid $sbm_txt
                                                 }
                                                 input.MuiInputBase-input{
-                                                    color: #aeaeae;
+                                                    color: $sbm_txt;
                                                     &:-webkit-autofill{
                                                         transition: background-color 5000s;
-                                                          -webkit-text-fill-color: #ffffff99 !important;
+                                                          -webkit-text-fill-color: $icon_input !important;
                                                         &:hover{
                                                             transition: background-color 5000s;
-                                                              -webkit-text-fill-color: #ffffff99 !important;
+                                                              -webkit-text-fill-color: $icon_input !important;
                                                         }
                                                         &:focus{
                                                             transition: background-color 5000s;
-                                                              -webkit-text-fill-color: #ffffff99 !important;
+                                                              -webkit-text-fill-color: $icon_input !important;
                                                         }
                                                         &:active{
                                                             transition: background-color 5000s;
-                                                              -webkit-text-fill-color: #ffffff99 !important;
+                                                              -webkit-text-fill-color: $icon_input !important;
                                                         }
                                                     }
                                                 }
                                                 &::after{
-                                                    border-bottom: 1px solid rgb(255, 132, 0);
+                                                    border-bottom: 1px solid $fdbck_h;
                                                 }
                                             }
                                         }
                                         .errorMessage {
                                             height: 15px;
                                             font-size: 12px;
-                                            color: rgb(191, 0, 0);
+                                            color: $err_txt;
                                             display: block;
                                             font-weight: 700;
                                         }
                                     }
                                     button{
-                                        border: 1px solid rgba(255, 132, 0, 0.436);
-                                        color: rgb(255, 132, 0);
+                                        border: 1px solid $fdbck_btn_bord;
+                                        color: $fdbck_h;
                                         &:hover{
-                                            background-color: rgba(210, 102, 25, 0.04);
-                                            border: 1px solid rgb(255, 132, 0);
+                                            background-color: $fdbck_btn_hov_bg;
+                                            border: 1px solid $fdbck_h;
                                         }
                                     }
                                 }
@@ -131,10 +132,10 @@ div.page__owner{
                 left: 45%;
                 bottom: 0;
                 li.alice-carousel__dots-item{
-                    background: rgba(255, 255, 255, 0.476);
+                    background: $inact_dot;
                 }
                 li.__active{
-                    background: rgb(255, 132, 0);
+                    background: $fdbck_h;
                 }
             }
         }
@@ -149,7 +150,7 @@ div.page__owner{
             gap: 10px;
             p{
                 font-family: 'Barlow', sans-serif;
-                color: rgb(255, 132, 0);
+                color: $fdbck_h;
                 line-height: 30px;
                 letter-spacing: 1.5px;
                 padding: 0;
@@ -161,7 +162,7 @@ div.page__owner{
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background: rgba(0, 0, 0, 0.02);
+                background: $blur_bg;
                 backdrop-filter: blur(8px);
                 border-radius: 10px;
             }
@@ -183,7 +184,7 @@ div.page__owner{
             overflow-y: scroll;
             p{
                 font-family: 'Barlow', sans-serif;
-                color: rgb(255, 132, 0);
+                color: $fdbck_h;
                 line-height: 30px;
                 letter-spacing: 1.5px;
                 padding: 0;
@@ -196,7 +197,7 @@ div.page__owner{
                 flex-direction: column;
                 align-items: flex-end;
                 justify-content: center;
-                background: rgba(0, 0, 0, 0.02);
+                background: $blur_bg;
                 backdrop-filter: blur(8px);
                 border-radius: 10px;
                 box-sizing: border-box;
@@ -240,7 +241,7 @@ div.page__owner{
                                     gap: 10px;
                                     p{
                                         font-family: 'Barlow', sans-serif;
-                                        color: rgb(255, 132, 0);
+                                        color: $fdbck_h;
                                         line-height: 30px;
                                         letter-spacing: 1.5px;
                                         padding: 0;
@@ -252,7 +253,7 @@ div.page__owner{
                                         display: flex;
                                         align-items: center;
                                         justify-content: center;
-                                        background: rgba(0, 0, 0, 0.02);
+                                        background: $blur_bg;
                                         backdrop-filter: blur(8px);
                                         border-radius: 10px;
                                     }
@@ -266,7 +267,7 @@ div.page__owner{
                                     overflow-y: scroll;
                                     p{
                                         font-family: 'Barlow', sans-serif;
-                                        color: rgb(255, 132, 0);
+                                        color: $fdbck_h;
                                         line-height: 30px;
                                         letter-spacing: 1.5px;
                                         padding: 0;
@@ -278,7 +279,7 @@ div.page__owner{
                                         flex-direction: column;
                                         align-items: flex-end;
                                         justify-content: center;
-                                        background: rgba(0, 0, 0, 0.02);
+                                        background: $blur_bg;
                                         backdrop-filter: blur(8px);
                                         border-radius: 10px;
                                         box-sizing: border-box;
@@ -310,12 +311,12 @@ div.page__owner{
         top: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 33, 0.654);
+        background: $main_bg;
         z-index: 100;
     }
 }
 .MuiDialog-root{
     .MuiBackdrop-root{
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: $muibckdr_bg;
     }
 }

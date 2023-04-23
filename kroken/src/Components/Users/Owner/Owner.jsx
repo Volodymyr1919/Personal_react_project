@@ -9,6 +9,7 @@ import { useStores } from "../../Stores/MainStore";
 import { TextField, Button } from "@mui/material";
 import Snack from "../../Partial/Snack";
 import Feedback from "../../Partial/Feedback/Feedback";
+import { language } from "../../lang";
 import "react-alice-carousel/lib/alice-carousel.css";
 // eslint-disable-next-line no-unused-vars
 import owner from "./owner.scss";
@@ -21,6 +22,7 @@ const Owner = observer(() => {
     const [condition, setCondition] = useState("");
     const [requiredBonuses, setRequiredBonuses] = useState("");
     const [gift, setGift] = useState("");
+    const [lng, setLng] = useState(ConfigStore.lang);
 
     useEffect(() => {
         new Promise((resolve, reject) => {
@@ -52,7 +54,8 @@ const Owner = observer(() => {
                 business_name       : myData.business_name,
                 condition           : data.condition,
                 required_bonuses    : data.requiredBonuses,
-                gift                : data.gift
+                gift                : data.gift,
+                status              : "active"
             })
         })
         .then((res) => {
@@ -61,7 +64,7 @@ const Owner = observer(() => {
                 resetField("requiredBonuses");
                 resetField("gift");
                 ConfigStore.setSeverity("success");
-                ConfigStore.setTextAlert("Success!");
+                ConfigStore.setTextAlert(lng === "de" ? "Erfolg!" : "Success!");
                 RequestStore.doGet(ConfigStore._url + "/posts/" + ConfigStore.businessName)
                 .then((res) => {
                     ConfigStore.setPosts(res);
@@ -69,11 +72,15 @@ const Owner = observer(() => {
                 ConfigStore.setIsSnackShow(true);
             } else {
                 ConfigStore.setSeverity("error");
-                ConfigStore.setTextAlert("Offer already existing!");
+                ConfigStore.setTextAlert(lng === "de" ? "Angebot bereits vorhanden!" : "Offer already existing!");
                 ConfigStore.setIsSnackShow(true);
             }
         })
     };
+
+    useEffect(() => {
+        setLng(ConfigStore.lang);
+    }, [ConfigStore.lang]);
       
     return(
         <>
@@ -83,18 +90,18 @@ const Owner = observer(() => {
                         <div className="about__newOffer">
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="newOffer__form">
-                                    <span className="form__title">Send new offer:</span>
+                                    <span className="form__title">{lng === "de" ? language.sendNewOffer.de : language.sendNewOffer.en}:</span>
                                     <TextField
                                         id="standard-basic"
-                                        label="Condition"
+                                        label={lng === "de" ? language.cond.de : language.cond.en}
                                         variant="standard" 
                                         type="text"
                                         fullWidth
                                         {...register("condition", {
-                                            required: 'Field is required',
+                                            required: `${lng === "de" ? language.required.de : language.required.en}`,
                                             minLength: {
                                                 value: 2,
-                                                message: "Minimum 2 symbols"
+                                                message: `${lng === "de" ? language.min2symb.de : language.min2symb.en}`
                                             },
                                             value: condition,
                                             onChange: (e) => {
@@ -105,12 +112,12 @@ const Owner = observer(() => {
                                     <p className="errorMessage">{errors.condition && errors.condition.message}</p>
                                     <TextField
                                         id="standard-basic"
-                                        label="Required bonuses"
+                                        label={lng === "de" ? language.required_bon.de : language.required_bon.en}
                                         variant="standard"
                                         type="number"
                                         fullWidth
                                         {...register("requiredBonuses", {
-                                            required: 'Field is required',
+                                            required: `${lng === "de" ? language.required.de : language.required.en}`,
                                             value: requiredBonuses,
                                             onChange: (e) => {
                                                 setRequiredBonuses(e.target.value)
@@ -120,12 +127,12 @@ const Owner = observer(() => {
                                     <p className="errorMessage">{errors.requiredBonuses && errors.requiredBonuses.message}</p>
                                     <TextField
                                         id="standard-basic"
-                                        label="Gift"
+                                        label={lng === "de" ? language.gift.de : language.gift.en}
                                         variant="standard"
                                         type="text"
                                         fullWidth
                                         {...register("gift", {
-                                            required: 'Field if required',
+                                            required: `${lng === "de" ? language.required.de : language.required.en}`,
                                             value: gift,
                                             onChange: (e) => {
                                                 setGift(e.target.value)
@@ -134,11 +141,13 @@ const Owner = observer(() => {
                                     />
                                     <p className="errorMessage">{errors.gift && errors.gift.message}</p>
                                 </div>
-                                <Button type="submit" variant="outlined">Send</Button>
+                                <Button type="submit" variant="outlined">
+                                    {lng === "de" ? language.send.de : language.send.en}
+                                </Button>
                             </form>
                         </div>
                         <div className="about__info">
-                            <p>Name: {myData.name ? ((myData.name).replace(/_/g," ")) : myData.name}</p>
+                            <p>{lng === "de" ? language.username.de : language.username.en}: {myData.name ? ((myData.name).replace(/_/g," ")) : myData.name}</p>
                             <p>
                                 <span className="info__type_business">
                                     {myData.type_business ? ((myData.type_business).replace(/_/g," ")) : myData.type_business}

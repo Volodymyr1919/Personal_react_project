@@ -29,14 +29,14 @@ const Footer = observer(() => {
 
     return(
         <footer>
-            <Button onClick={handleClickOpen('paper')}>
+            <Button onClick={handleClickOpen('paper')} className='footer__button'>
                 {lng === "de" ? language.aboutApp.de : language.aboutApp.en}
             </Button>
             <p className="footer__me">powered by @ViValdy</p>
             <p>All rights reserved © {year}</p>
             <AboutApp />
             <Feedback />
-            <Button onClick={openFeed}>
+            <Button onClick={openFeed} className='footer__button'>
                 {lng === "de" ? language.feedback.de : language.feedback.en}
             </Button>
         </footer>

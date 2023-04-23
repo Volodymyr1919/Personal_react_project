@@ -125,7 +125,8 @@ MongoClient.connect(data.url)
         postsCollection.updateOne(
             {
                 _id: id,
-                deleted: false
+                deleted: false,
+                status : "active"
             },
             {$set: {deleted: true}}
         )
@@ -141,13 +142,33 @@ MongoClient.connect(data.url)
     app.get('/oldPosts/:business_name', (req, res) => {
         postsCollection.find({
             business_name : req.params.business_name,
-            deleted : true
+            deleted : true,
+            status : "active"
         }).toArray()
         .then(result => {
             if (result) {
                 res.send(result);
             } else {
                 res.sendStatus(404);
+            }
+        })
+    });
+
+    app.delete('/forever', (req, res) => {
+        let id = new ObjectId(req.body.id);
+        postsCollection.updateOne(
+            {
+                _id: id,
+                deleted: true,
+                status : "active"
+            },
+            {$set: {status: "inactive"}}
+        )
+        .then(result => {
+            if (result) {
+                res.send(result);
+            } else {
+                res.sendStatus(400);
             }
         })
     });

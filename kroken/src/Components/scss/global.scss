@@ -18,7 +18,7 @@ body{
         footer{
             width: 100%;
             height: 60px;
-            background: #4C0013;
+            background: $bg_header;
             position: fixed;
             bottom: 0;
             display: flex;
@@ -26,13 +26,16 @@ body{
             justify-content: space-between;
             z-index: 200;
             font-family: 'Montserrat', sans-serif;
-            color: rgb(196, 196, 196);
+            color: $about_txt;
             p{
                 padding: 0;
                 margin: 0;
             }
             p.footer__me{
                 font-family: 'Petit Formal Script', cursive;
+            }
+            .footer__button{
+                color: $about_buttons;
             }
         }
     }
