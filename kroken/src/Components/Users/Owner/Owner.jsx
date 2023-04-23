@@ -54,8 +54,7 @@ const Owner = observer(() => {
                 business_name       : myData.business_name,
                 condition           : data.condition,
                 required_bonuses    : data.requiredBonuses,
-                gift                : data.gift,
-                status              : "active"
+                gift                : data.gift
             })
         })
         .then((res) => {

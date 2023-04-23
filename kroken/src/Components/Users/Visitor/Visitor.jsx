@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import { useStores } from "../../Stores/MainStore";
 import Feedback from "../../Partial/Feedback/Feedback";
 import { language } from "../../lang";
+import Snack from "../../Partial/Snack";
 // eslint-disable-next-line no-unused-vars
 import visitor from "./visitor.scss";
 
@@ -31,22 +32,25 @@ const Visitor = observer(() => {
     }, [ConfigStore.lang]);
 
     return(
-        <div className="page__visitor">
-            <div className="visitor__about">
-                <div className="about__info">
-                    <p>{lng === "de" ? language.username.de : language.username.en}: {myData.name ? ((myData.name).replace(/_/g," ")) : myData.name}</p>
-                    <p>
-                        <span className="info__type_business">
-                            {myData.type_business ? ((myData.type_business).replace(/_/g," ")) : myData.type_business}
-                        </span>: {myData.business_name ? ((myData.business_name).replace(/_/g," ")) : myData.business_name}
-                    </p>
-                    <p>Bonus: {myData.bonus}</p>
+        <>
+            <div className="page__visitor">
+                <div className="visitor__about">
+                    <div className="about__info">
+                        <p>{lng === "de" ? language.username.de : language.username.en}: {myData.name ? ((myData.name).replace(/_/g," ")) : myData.name}</p>
+                        <p>
+                            <span className="info__type_business">
+                                {myData.type_business ? ((myData.type_business).replace(/_/g," ")) : myData.type_business}
+                            </span>: {myData.business_name ? ((myData.business_name).replace(/_/g," ")) : myData.business_name}
+                        </p>
+                        <p>Bonus: {myData.bonus}</p>
+                    </div>
+                    <Offers myData={myData} />
                 </div>
-                <Offers myData={myData} />
+                <div className="page__bg"></div>
+                <Feedback />
             </div>
-            <div className="page__bg"></div>
-            <Feedback />
-        </div>
+            <Snack />
+        </>
     );
 });
 

@@ -72,7 +72,8 @@ MongoClient.connect(data.url)
     app.get('/posts/:business_name', (req, res) => {
         postsCollection.find({
             business_name : req.params.business_name,
-            deleted : false
+            deleted : false,
+            status : "active"
         }).toArray()
         .then(result => {
             if (result) {
@@ -112,7 +113,8 @@ MongoClient.connect(data.url)
                     condition: req.body.condition,
                     required_bonuses: req.body.required_bonuses,
                     gift: req.body.gift,
-                    deleted : false
+                    deleted : false,
+                    status : "active"
                 }).then((resp) => {
                     res.send(resp);
                 })
@@ -128,7 +130,9 @@ MongoClient.connect(data.url)
                 deleted: false,
                 status : "active"
             },
-            {$set: {deleted: true}}
+            {
+                $set: {deleted: true}
+            }
         )
         .then(result => {
             if (result) {
